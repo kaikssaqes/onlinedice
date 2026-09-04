@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>4 Color Dice &mdash; Roll 6-Sided Color Dice | Online-Dice.com</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.online-dice.com/favicon-32x32.png">
+<style>
+/* ===== COPIED FROM style.php (verbatim, local asset paths) ===== */
+@keyframes shake {0% { transform:translate(1px, 1px) rotate(0deg); }10% { transform:translate(-1px, -2px) rotate(-1deg); }20% { transform:translate(-3px, 0px) rotate(1deg); }30% { transform:translate(3px, 2px) rotate(0deg); }40% { transform:translate(1px, -1px) rotate(1deg); }50% { transform:translate(-1px, 2px) rotate(-1deg); }60% { transform:translate(-3px, 1px) rotate(0deg); }70% { transform:translate(3px, 1px) rotate(-1deg); }80% { transform:translate(-1px, -1px) rotate(1deg); }90% { transform:translate(1px, 2px) rotate(0deg); }100% { transform:translate(1px, -2px) rotate(-1deg); }}
+.zoom-result {display:inline-block;transform-origin:center;animation:shake 0.1s;animation-iteration-count:1;}
+.size-100 {font-size:90px;width:90px;height:90px;}
+.size-100 i {width:90px;height:90px;display:block;}
+.dice-wrapper i {animation:shake 0.5s;animation-iteration-count:1;}
+.dice-wrapper {display:inline-block;line-height:1;position:relative;margin:0px;margin:5px;}
+@font-face {font-family:"dicefont";src:url("fonts/dicefont.eot");src:url("fonts/dicefont.eot?#iefix") format("embedded-opentype"), url("fonts/dicefont.woff") format("woff"), url("fonts/dicefont.ttf") format("truetype"), url("fonts/dicefont.svg#dicefont") format("svg");font-weight:normal;font-style:normal;}
+[data-icon]:before { content:attr(data-icon); }
+[data-icon]:before,.df-d10-0:before,.df-d10-1:before,.df-d10-10:before,.df-d10-2:before,.df-d10-3:before,.df-d10-4:before,.df-d10-5:before,.df-d10-6:before,.df-d10-7:before,.df-d10-8:before,.df-d10-9:before,.df-d12-1:before,.df-d12-10:before,.df-d12-11:before,.df-d12-12:before,.df-d12-2:before,.df-d12-3:before,.df-d12-4:before,.df-d12-5:before,.df-d12-6:before,.df-d12-7:before,.df-d12-8:before,.df-d12-9:before,.df-d2-1:before,.df-d2-2:before,.df-d20-1:before,.df-d20-10:before,.df-d20-11:before,.df-d20-12:before,.df-d20-13:before,.df-d20-14:before,.df-d20-15:before,.df-d20-16:before,.df-d20-17:before,.df-d20-18:before,.df-d20-19:before,.df-d20-2:before,.df-d20-20:before,.df-d20-3:before,.df-d20-4:before,.df-d20-5:before,.df-d20-6:before,.df-d20-7:before,.df-d20-8:before,.df-d20-9:before,.df-d4-1:before,.df-d4-2:before,.df-d4-3:before,.df-d4-4:before,.df-d6-1:before,.df-d6-2:before,.df-d6-3:before,.df-d6-4:before,.df-d6-5:before,.df-d6-6:before,.df-d8-1:before,.df-d8-2:before,.df-d8-3:before,.df-d8-4:before,.df-d8-5:before,.df-d8-6:before,.df-d8-7:before,.df-d8-8:before,.df-dot-d6-1:before,.df-dot-d6-2:before,.df-dot-d6-3:before,.df-dot-d6-4:before,.df-dot-d6-5:before,.df-dot-d6-6:before,.df-small-dot-d6-1:before,.df-small-dot-d6-2:before,.df-small-dot-d6-3:before,.df-small-dot-d6-4:before,.df-small-dot-d6-5:before,.df-small-dot-d6-6:before,.df-solid-small-dot-d6-1:before,.df-solid-small-dot-d6-2:before,.df-solid-small-dot-d6-3:before,.df-solid-small-dot-d6-4:before,.df-solid-small-dot-d6-5:before,.df-solid-small-dot-d6-6:before {display:inline-block;font-family:"dicefont";font-style:normal;font-weight:normal;font-variant:normal;line-height:1;text-decoration:inherit;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;}
+.df-solid-small-dot-d6-1:before { content:"\f189"; }.df-solid-small-dot-d6-2:before { content:"\f18a"; }.df-solid-small-dot-d6-3:before { content:"\f18b"; }.df-solid-small-dot-d6-4:before { content:"\f18c"; }.df-solid-small-dot-d6-5:before { content:"\f18d"; }.df-solid-small-dot-d6-6:before { content:"\f18e"; }
+@font-face {font-family:"Marvin";src:url("fonts/Marvin-webfont.eot");src:url("fonts/Marvin-webfont.eot?#iefix") format("embedded-opentype"),url("fonts/Marvin-webfont.woff2") format("woff2"),url("fonts/Marvin-webfont.woff") format("woff"),url("fonts/Marvin-webfont.ttf") format("truetype"),url("fonts/Marvin-webfont.svg#marvinregular") format("svg");font-weight:400;font-style:normal;font-display:swap;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+html, body {margin:0;padding:0;font-family:"Marvin", Arial, sans-serif;font-size:16px;line-height:1.5em;border:none;box-sizing:border-box;background:#08f radial-gradient(#f1f9ff, #08f);color:#fff;background-repeat:no-repeat;background-size:100% 100%;}
+body {min-height:100vh;}
+.noselect {-webkit-touch-callout:none; -webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none; -ms-user-select:none; user-select:none; }
+p, h1, h2, h3, h4, h5, h6, form {position:relative;display:block;margin:0;padding:0;box-sizing:border-box;}
+h1 {font-size:34px;line-height:1.2em;}
+h2 {font-size:28px;line-height:1.2em;}
+h3 {font-size:24px;line-height:1.2em;}
+h4 {font-size:22px;line-height:1.2em;}
+h5 {font-size:20px;line-height:1.2em;}
+h6 {font-size:18px;line-height:1.2em;}
+a {color:#fff;position:relative;display:inline-block;text-decoration:none;transition:color .35s ease;}
+a:hover {color:#fff;transition-duration:.06s;}
+input:focus, select:focus {outline:0;-webkit-tap-highlight-color:none;}
+div {position:relative;}
+span {display:inline;box-sizing:border-box;}
+.separator-xs {display:block;height:10px;width:100%;}
+.separator-sm {display:block;height:20px;width:100%;}
+.card {box-sizing:border-box;vertical-align:top;margin-left:auto;margin-right:auto;}
+.centered {margin-left:auto;margin-right:auto;}
+.padded {padding:35px 50px;}
+.rounded {border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;}
+.more-rounded {border-radius:20px;-webkit-border-radius:20px;-moz-border-radius:20px;border:5px solid rgba(255,255,255,0.5);box-shadow:2px 2px 5px 1px rgba(0,98,183,0.33);}
+.filled {background:rgba(0,136,255,0.7);}
+.full {width:calc(100% - 10px);max-width:800px;}
+.two-thirds {width:450px;}
+.half {width:calc(50% - 10px);max-width:760px;}
+.third {width:33.33%;max-width:300px;}
+.block {display:block;}
+.inline-block {display:inline-block;}
+.clear {display:block;clear:both;}
+.hide {display:none;}
+.inner {width:100%;max-width:1070px;margin:0 auto;text-align:left;}
+#content {padding-bottom:20px;background-repeat:repeat;background-image:url("img/bg-lg.png");background-size:500px;}
+#content .inner {padding:30px 0 0 0;}
+#title {text-align:center;font-size:64px;}
+#logo {filter:saturate(1.05) brightness(1.03);}
+#sub-title, #sub-title-vip, #sub-title3 {text-shadow:-1px -1px 0 #08f,1px -1px 0 #08f,-1px 1px 0 #08f,3px 3px 0 #08f;letter-spacing:.06em;padding:0 0 20px 0;text-align:center;}
+#dice-roll-box {text-align:center;background:rgba(0,136,255,0.45);padding:30px 15px;}
+#sub-title2 {text-shadow:-1px -1px 0 #08f,1px -1px 0 #08f,-1px 1px 0 #08f,3px 3px 0 #08f;letter-spacing:.02em;padding:0;}
+#num-select, #type-select, select {display:inline-block;width:calc(50% - 10px);padding:8px 15px 8px 10px;margin:15px 5px 10px 5px;border-radius:0.25em;border:3px solid #08f;font-size:18px;background:#fff!important;font-family:"Marvin", Arial, sans-serif;color:#08f!important;}
+#roll-button {width:calc(100% - 10px);box-sizing:border-box;font-size:22px;padding:13px 0;margin-bottom:10px;text-shadow:-1px -1px 0 #ca8a00,1px -1px 0 #ca8a00,-1px 1px 0 #ca8a00,2px 2px 0 #ca8a00;letter-spacing:0.02em;background:rgb(255,215,0);background-image:linear-gradient(to bottom,rgb(255,235,0) 0%, rgb(255,215,0) 51%, rgb(255,244,188) 100%);background-size:auto 200%;border-top:3px solid #fff;border-right:3px solid rgba(255,255,255,0.8);border-bottom:3px solid rgba(255,255,255,0.8);border-left:3px solid rgba(255,255,255,0.8);transition:0.1s;}
+#roll-button:hover {background-size:auto 200%;background-position:bottom center;}
+.rounded-dice {background:#08f;border-radius:15px;-webkit-border-radius:15px;-moz-border-radius:15px;border:1px solid rgba(255,255,255,0);}
+.result {background:rgba(255,255,255,1);width:calc(100% - 10px);max-width:300px;margin:0 auto 10px auto;padding:10px 0;color:#08f;border:3px solid #08f;}
+.section-title {margin-bottom:20px;text-shadow:-1px -1px 0 #08f,1px -1px 0 #08f,-1px 1px 0 #08f,3px 3px 0 #08f;letter-spacing:0.02em;}
+.section-text p, .blog-excerpt p {font-family:Arial, sans-serif;margin:20px 0;line-height:1.4em;}
+#footer {letter-spacing:0.02em;background:#002f59;padding:35px 0 120px 0;}
+#footer .inner {text-align:center;}
+#footer a {margin:0 7px;padding:5px 3px;}
+.footer-menu-1, .footer-menu-2, .copyright {padding:15px 0;}
+.copyright {font-size:13px;}
+@media only screen and (max-width:1110px) {
+  .full, .two-thirds, .half, .third, .quarter {display:block;margin-left:auto;margin-right:auto;}
+}
+@media only screen and (max-width:1420px) {
+  .two-thirds {width:100%; max-width:450px;}
+}
+@media only screen and (min-width:1390px) {
+  .inner {text-align:center;width:1380px;max-width:1380px;}
+}
+
+/* ===== STREAMER WIDGET (from source inline style) ===== */
+#streamer-widget-right, #streamer-widget-left {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+  width: 100%;
+  text-align: center;
+  max-width: 300px;
+  border-radius: 20px;
+  border: 5px solid rgba(255,255,255,0.5);
+  padding: 20px 15px 10px 15px;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 5px 1px rgba(0,98,183,0.33);
+  vertical-align: top;
+  background: rgba(0,136,255,0.7);
+}
+#streamer-widget-right {margin-left:10px;}
+#streamer-widget-left {margin-right:10px;}
+@media only screen and (max-width: 1110px) {
+  #streamer-widget-right, #streamer-widget-left {display: none;}
+}
+#streamer-widget-left h4, #streamer-widget-right h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: 400;
+}
+a.streamer {
+  display: block;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  margin-bottom: 5px;
+  padding: 4px 3px;
+  background: rgba(225,225,225,0.2);
+  text-align:left;
+}
+a.streamer:hover {background: rgba(225,225,225,0.35);}
+a.streamer.highlight {background: rgba(255,255,255,0.35);border-color: rgba(255,255,255,0.5);}
+a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
+.streamer-nickname {
+  font-size: 15px;
+  display: inline-block;
+  width: calc(100% - 65px);
+  text-align: left;
+  margin-left: 7px;
+  vertical-align: middle;
+  letter-spacing: -0.01em;
+  line-height: 1.45em;
+}
+.streamer-handle {
+  display: block;
+  font-size: 13px;
+  font-family: Arial,sans-serif;
+  font-weight: 700;
+}
+.streamer-avatar {
+  display: inline-block;
+  height: 47px;
+  width: 47px;
+  vertical-align: middle;
+  box-sizing: border-box;
+  position: relative;
+}
+.streamer-avatar img {
+  border-radius: 50%;
+  width: 47px;
+  height: 47px;
+  box-sizing: border-box;
+  border: 2px solid #fff;
+}
+.streamer-avatar img.live {border: 3px solid #fe2c55;}
+.live-indicator {
+  background: #fe2c55;
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  font-size: 11px;
+  font-family: Arial,sans-serif;
+  transform: translate(-50%,0);
+  text-align: center;
+  line-height: 11px;
+  padding: 1px 3px;
+  border-radius: 3px;
+  font-weight: 700;
+  white-space:nowrap;
+}
+
+/* ===== SCORE / TOGGLE / MISC (from source inline) ===== */
+#top-wrapper {text-align:center;}
+.count-btn:hover {background:rgba(255,255,255,0.2)!important;}
+.toggle-container{display:inline-flex;align-items:center;gap:10px;margin-top:15px;margin-bottom:15px;font-family:Arial,sans-serif;font-size:14px;color:#fff}
+.switch{position:relative;display:inline-block;width:44px;height:24px}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;cursor:pointer;background:#444;border-radius:999px;transition:0.25s}
+.slider::before{content:"";position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:0.25s;box-shadow:0 2px 6px rgb(0 0 0 / .25)}
+.switch-name {font-weight:700;font-size:18px;}
+.switch input:checked+.slider{background:#fe2c55}
+.switch input:checked+.slider::before{transform:translateX(20px)}
+</style>
+</head>
+<body>
+<div class="light"></div>
+<div id="content">
+  <div class="inner">
+
+    <div class="card full block centered">
+      <h1 id="title" class="title pc-only"><a title="Online Dice" href="#"><img fetchpriority="high" id="logo" src="img/logo-new.png" height="70"></a></h1>
+      <h3 id="sub-title">Virtual Dice Simulator</h3>
+    </div>
+
+    <div id="top-wrapper">
+      <div id="streamer-widget-left" class="filled">
+        <h4>Our Top Streamers</h4>
+        <a class="streamer live highlight"><div class="streamer-avatar"><img src="img/streamers/xtypv1.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">example</span><svg viewBox="0 0 22 22" style="width:18px;height:18px;fill:#fff;vertical-align:middle;margin-left:3px;margin-bottom:2px;"><path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg><span class="streamer-handle">@loveagoodlarp</span></div></a>
+        <a class="streamer live highlight"><div class="streamer-avatar"><img src="img/streamers/deets_gaming.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">Deets Gaming</span><svg viewBox="0 0 22 22" style="width:18px;height:18px;fill:#fff;vertical-align:middle;margin-left:3px;margin-bottom:2px;"><path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg><span class="streamer-handle">@deets_gaming</span></div></a>
+        <a class="streamer live highlight"><div class="streamer-avatar"><img src="img/streamers/toodyreliquia.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">Toody</span><svg viewBox="0 0 22 22" style="width:18px;height:18px;fill:#fff;vertical-align:middle;margin-left:3px;margin-bottom:2px;"><path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg><span class="streamer-handle">@toodyreliquia</span></div></a>
+        <a class="streamer live highlight"><div class="streamer-avatar"><img src="img/streamers/vinyyws.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">vinyyws</span><svg viewBox="0 0 22 22" style="width:18px;height:18px;fill:#fff;vertical-align:middle;margin-left:3px;margin-bottom:2px;"><path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg><span class="streamer-handle">@vinyyws</span></div></a>
+        <a class="streamer live highlight"><div class="streamer-avatar"><img src="img/streamers/sabvlx.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">vlx</span><svg viewBox="0 0 22 22" style="width:18px;height:18px;fill:#fff;vertical-align:middle;margin-left:3px;margin-bottom:2px;"><path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg><span class="streamer-handle">@sabvlx</span></div></a>
+        <a class="streamer live highlight"><div class="streamer-avatar"><img src="img/streamers/anpritoroblo.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">Anprito</span><svg viewBox="0 0 22 22" style="width:18px;height:18px;fill:#fff;vertical-align:middle;margin-left:3px;margin-bottom:2px;"><path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg><span class="streamer-handle">@anpritoblox</span></div></a>
+        <a class="streamer live highlight"><div class="streamer-avatar"><img src="img/streamers/lerb942.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">lerb</span><svg viewBox="0 0 22 22" style="width:18px;height:18px;fill:#fff;vertical-align:middle;margin-left:3px;margin-bottom:2px;"><path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg><span class="streamer-handle">@.lerb942</span></div></a>
+        <a class="streamer live"><div class="streamer-avatar"><img src="img/streamers/imbadwtw.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">ImBadwtw</span><span class="streamer-handle">@imbadwtw</span></div></a>
+        <a class="streamer live"><div class="streamer-avatar"><img src="img/streamers/whyyshakk.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">whyyshakk</span><span class="streamer-handle">@whyyshakk</span></div></a>
+        <a class="streamer live"><div class="streamer-avatar"><img src="img/streamers/poruke_sab.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">Poruke</span><span class="streamer-handle">@poruke_sab</span></div></a>
+      </div>
+
+      <div id="dice-roll-box" class="card two-thirds inline-block padded more-rounded filled">
+        <h3 id="sub-title2">Roll Color Dice</h3>
+        <select id="num-select" name="num-select" class="rounded" autocomplete="off" style="width:calc(33.3% - 10px);">
+          <option value="1">1 die</option><option value="2">2 dice</option><option value="3">3 dice</option><option value="4" selected>4 dice</option><option value="5">5 dice</option><option value="6">6 dice</option><option value="7">7 dice</option><option value="8">8 dice</option><option value="9">9 dice</option><option value="10">10 dice</option><option value="11">11 dice</option><option value="12">12 dice</option><option value="13">13 dice</option><option value="14">14 dice</option><option value="15">15 dice</option><option value="16">16 dice</option><option value="17">17 dice</option><option value="18">18 dice</option><option value="19">19 dice</option><option value="20">20 dice</option>
+        </select>
+        <select id="type-select" class="rounded" name="type-select" autocomplete="off" style="width:calc(33.3% - 10px);">
+          <option value="d4">4-sided</option><option value="d6">6-sided</option><option value="d8">8-sided</option><option value="d10">10-sided</option><option value="d12">12-sided</option><option value="d20">20-sided</option><option value="color-dice" selected>Color Dice</option><option value="perya-color-game">Perya Dice</option>
+        </select>
+        <select id="theme-select" class="rounded" name="theme-select" autocomplete="off" style="width:calc(33.3% - 10px);">
+          <option style="color:#aaa" value="blue" selected>Select Theme</option>
+          <option style="color:#08f" value="blue">Blue</option><option style="color:#08f" value="sab-blue">Sab-Blue</option>
+          <option style="color:#008000" value="green">Green</option><option style="color:#008000" value="sab-green">Sab-Green</option>
+          <option style="color:#B22222" value="red">Red</option><option style="color:#B22222" value="sab-red">Sab-Red</option>
+          <option style="color:#EE82EE" value="pink">Pink</option><option style="color:#222" value="bw">B&amp;W</option>
+        </select>
+
+        <div id="Tpi0l65aKvD4efJtrZKFbMBV4l9TbypPm" style="padding:10px 0;">
+          <span id="info" style="width:0;height:0;visibility:hidden;"></span>
+          <div class="dice-wrapper size-100 rounded-dice" style="background:#fff!important;"><i style="color:darkorange!important;" class="df-solid-small-dot-d6-1"></i></div><div class="dice-wrapper size-100 rounded-dice" style="background:#fff!important;"><i style="color:blue!important;" class="df-solid-small-dot-d6-1"></i></div><div class="dice-wrapper size-100 rounded-dice" style="background:#fff!important;"><i style="color:darkorange!important;" class="df-solid-small-dot-d6-1"></i></div><div class="dice-wrapper size-100 rounded-dice" style="background:#fff!important;"><i style="color:blue!important;" class="df-solid-small-dot-d6-1"></i></div>
+          <p style="font-family: Arial,sans-serif;font-size:14px;width: calc(100% - 10px);box-sizing: border-box;margin: 15px auto 0;display: block;color: #fff;font-weight: 400;border-radius: 4px;background: none;padding: 0;">ID: <span id="gameidcodetext" style="display:inline;font-size:24px;font-weight:700;letter-spacing:0.12em;color: #fff;background: none;padding: 0;border-radius: 0;margin: 0;text-decoration:none;">d8EJ1fvAqN</span></p>
+          <p id="infomsg" style="color: blue;font-size: 18px;line-height: 1.6em;">🧐 <a target="_blank" href="#" style="color: blue;text-decoration: underline;">Verify Game ID</a></p>
+        </div>
+
+        <a href="#" id="roll-button" class="roll-button rounded" style="padding-top:12px!important;padding-bottom:12px!important;">Go Again !</a>
+
+        <div style="width: calc(100% - 10px);margin: 5px auto 0 auto;">
+          <div id="count" class="noselect" style="background: rgba(225,225,225,0.3);margin: 0 auto 5px auto;border: 2px solid rgba(255,255,255,0.2);border-radius: 4px;font-size: 36px;font-family:Arial,sans-serif;font-weight: 700;padding: 12px 10px;">+11</div>
+          <div style="position: absolute;top: 50%;left: 0;transform: translate(0,-50%);background: rgba(255,255,255,0.15);border-radius: 2px;">
+            <div id="minus-btn" class="count-btn noselect" style="padding: 0 10px;cursor: pointer;font-family: Arial,sans-serif;font-weight: 700;font-size: 16px;min-width: 48px;box-sizing: border-box;">-1</div>
+            <div class="count-btn noselect" style="padding: 0 10px;cursor: pointer;font-family: Arial,sans-serif;font-weight: 700;font-size: 16px;min-width: 48px;box-sizing: border-box;" id="minus-btn-10">-10</div>
+          </div>
+          <div style="position: absolute;top: 50%;right: 0;transform: translate(0,-50%);background: rgba(255,255,255,0.15);border-radius: 2px;">
+            <div id="plus-btn" class="count-btn noselect" style="padding: 0 10px;cursor: pointer;font-family: Arial,sans-serif;font-weight: 700;font-size: 16px;min-width: 48px;box-sizing: border-box;">+1</div>
+            <div id="plus-btn-10" class="count-btn noselect" style="padding: 0 10px;cursor: pointer;font-family: Arial,sans-serif;font-weight: 700;font-size: 16px;min-width: 48px;box-sizing: border-box;">+10</div>
+          </div>
+        </div>
+
+        <span id="game-roll-streak" style="margin-top: 10px;margin-bottom:10px;display: inline-block;font-family:Arial,sans-serif;font-size:14px;background: rgba(225,225,225,0.3);border-radius: 4px;padding: 0px 7px;">Roll Streak: <span>5 🔥🎲 (Fire dice)</span></span>
+        <br/>
+        <span id="user-count" style="margin-top: 10px;margin-bottom:10px;display: inline-block;font-family:Arial,sans-serif;font-size:14px;background: rgba(225,225,225,0.3);border-radius: 4px;padding: 0px 7px;">🟢 Users online: <span>560</span></span>
+        <br/>
+        <a id="pwa-button" href="javascript:void(0);">Install app<span style="font-family: Arial, sans-serif;margin-top: 5px;color: #fff;display: block;font-style: italic;font-size: 16px;text-transform:none;">Fewer ads, instant access.</span></a>
+        <p style="font-size:14px;margin-top:10px;margin-bottom:10px;font-family: Arial, sans-serif;font-weight: 700;background: rgba(225,225,225,0.3);border-radius:4px;padding:2px 0;text-transform:none;">Possible colors are: <span style="color:red;">Red</span>, <span style="color:orange;">Orange</span>, <span style="color:gold;">Yellow</span>, <span style="color:green;">Green</span>, <span style="color:blue;">Blue</span> and <span style="color:purple;">Purple</span>.</p>
+        <p style="font-size:14px;margin-top:0;margin-bottom:10px;font-family: Arial, sans-serif;font-weight: 400;border-radius:4px;padding:2px 0;text-transform:none;"><a target="_blank" href="#" style="color: #fff;text-decoration: underline;">See your chances of winning →</a></p>
+        <div id="show-history" onclick="showHistory();" style="display:block;text-decoration:underline;cursor:pointer;margin-top:5px;font-family:Arial,sans-serif;font-size:14px;">Your Last 20 Rolls ↓</div>
+        <div class="toggle-container">
+          <span class="switch-name">Anti-Ban Mode</span>
+          <label class="switch">
+            <input type="checkbox" id="blurToggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div id="streamer-widget-right" class="filled">
+        <h4>Our Top Streamers</h4>
+        <a class="streamer live"><div class="streamer-avatar"><img src="img/streamers/mixtarzz.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">MixTarZ SAB</span><span class="streamer-handle">@mixtarzz</span></div></a>
+        <a class="streamer live"><div class="streamer-avatar"><img src="img/streamers/pay_dices5678.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">pay</span><span class="streamer-handle">@pay.dices5678</span></div></a>
+        <a class="streamer live"><div class="streamer-avatar"><img src="img/streamers/mkillzs.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">MKill</span><span class="streamer-handle">@mkillzs</span></div></a>
+        <a class="streamer live"><div class="streamer-avatar"><img src="img/streamers/meliodasgbs.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">MeliodasGBS</span><span class="streamer-handle">@meliodasgbs</span></div></a>
+        <a class="streamer live"><div class="streamer-avatar"><img src="img/streamers/christophergould91.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">Alaxa420</span><span class="streamer-handle">@christophergould91</span></div></a>
+        <a class="streamer live"><div class="streamer-avatar"><img src="img/streamers/discreditu.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">discreditu</span><span class="streamer-handle">@discreditu</span></div></a>
+        <a class="streamer live"><div class="streamer-avatar"><img src="img/streamers/bakedcucu_mma.jpeg" width="47" height="47" class="live"><div class="live-indicator">Live</div></div><div class="streamer-nickname"><span style="vertical-align:middle;">BakedCUCU.MMA</span><span class="streamer-handle">@bakedcucu.mma</span></div></a>
+        <a class="streamer"><div class="streamer-avatar"><img src="img/streamers/viajero_ninja11.jpeg" width="47" height="47"></div><div class="streamer-nickname"><span style="vertical-align:middle;">Viajero_ninja11</span><svg viewBox="0 0 22 22" style="width:20px;height:20px;fill:#fff;vertical-align:middle;margin-left:5px;margin-bottom:2px;"><path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg><span class="streamer-handle">@viajero_ninja11</span></div></a>
+        <a class="streamer"><div class="streamer-avatar"><img src="img/streamers/kazuhiko_mayuko.jpeg" width="47" height="47"></div><div class="streamer-nickname"><span style="vertical-align:middle;">Kaz</span><svg viewBox="0 0 22 22" style="width:20px;height:20px;fill:#fff;vertical-align:middle;margin-left:5px;margin-bottom:2px;"><path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg><span class="streamer-handle">@kazuhiko_mayuko</span></div></a>
+        <a class="streamer"><div class="streamer-avatar"><img src="img/streamers/frexx180.jpeg" width="47" height="47"></div><div class="streamer-nickname"><span style="vertical-align:middle;">Frexx</span><svg viewBox="0 0 22 22" style="width:20px;height:20px;fill:#fff;vertical-align:middle;margin-left:5px;margin-bottom:2px;"><path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg><span class="streamer-handle">@frexx180</span></div></a>
+      </div>
+    </div>
+
+    <div class="separator-xs"></div>
+
+    <div class="card two-thirds block padded more-rounded filled">
+      <h4 class="section-title">How do these virtual dice work?</h4>
+      <div class="card full block rounded">
+        <div class="section-text" style="text-transform:none;">
+          <p>This website uses virtual dice created with an algorithm that assigns equal probabilities to every possible outcome. By clicking on the 'Go Again' button you can re-roll all the dice on this page.</p><p>This page allows you to choose any number of dice between 1 and 100, each having 6 sides and 6 possible colors:<br/><span style="color:red;">Red</span>, <span style="color:orange;">Orange</span>, <span style="color:gold;">Yellow</span>, <span style="color:green;">Green</span>, <span style="color:blue;">Blue</span> and <span style="color:purple;">Purple</span>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="separator-xs"></div>
+
+    <div class="card two-thirds block padded more-rounded filled">
+      <h4 class="section-title">About us</h4>
+      <div class="card full">
+        <div class="section-text" style="text-transform:none;">
+          <p>Online-Dice.com is an online dice simulator that anyone can use to roll virtual dice when no real dice are available. With this free simulator you can roll dice for online games, board games, or any other game of chance.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer id="footer">
+  <div class="inner">
+    <div class="footer-menu-1">
+      <a class="nav-item home" href="#">Dice Roller</a>
+      <a class="nav-item color-dice" href="#">Color Dice</a>
+      <a class="nav-item what-are-dice" href="#">What Are Dice?</a>
+      <a class="nav-item dice-games" href="#">Dice Games</a>
+    </div>
+    <div class="footer-menu-2"><a href="#">Home</a><a href="#">Privacy Policy</a><a href="#">Ad-free Login</a><a href="#">VIP Login</a></div>
+    <div>
+      <select id="lang-select" class="rounded" name="lang-select" autocomplete="off" style="min-width:250px;width:250px;max-width:250px;font-size:16px!important;">
+        <option value="en" selected style="color:#aaa">Change Language</option>
+        <option value="de">Deutsch</option><option value="en">English</option><option value="es">Español</option><option value="fr">Français</option><option value="pl">Polski</option><option value="pt">Português</option>
+      </select>
+    </div>
+    <div class="copyright">&copy; 2026 ONLINE-DICE.COM</div>
+  </div>
+</footer>
+
+<script>
+  const COLORS = ['red','darkorange','gold','green','blue','purple'];
+  const diceHolder = document.getElementById('Tpi0l65aKvD4efJtrZKFbMBV4l9TbypPm');
+  const countEl = document.getElementById('count');
+  let score = 11;
+
+  function randomColor(){
+    const max = Math.floor(0xffffffff / COLORS.length) * COLORS.length;
+    const buf = new Uint32Array(1);
+    let v;
+    do { crypto.getRandomValues(buf); v = buf[0]; } while (v >= max);
+    return COLORS[v % COLORS.length];
+  }
+
+  function renderDice(n){
+    const dices = diceHolder.querySelectorAll('.dice-wrapper');
+    // rebuild dice area
+    const infoEl = document.getElementById('info');
+    const idP = diceHolder.querySelector('#gameidcodetext').parentNode;
+    const infomsg = document.getElementById('infomsg');
+    // clear old dice (keep info span, id p, infomsg)
+    Array.from(diceHolder.children).forEach(el => {
+      if (el.classList && el.classList.contains('dice-wrapper')) el.remove();
+    });
+    const frag = document.createDocumentFragment();
+    for (let i=0;i<n;i++){
+      const d = document.createElement('div');
+      d.className = 'dice-wrapper size-100 rounded-dice';
+      d.style.background = '#fff';
+      const ii = document.createElement('i');
+      ii.className = 'df-solid-small-dot-d6-1';
+      ii.style.color = randomColor();
+      d.appendChild(ii);
+      frag.appendChild(d);
+    }
+    infoEl.after(frag);
+  }
+
+  document.getElementById('roll-button').addEventListener('click', (e)=>{
+    e.preventDefault();
+    const n = parseInt(document.getElementById('num-select').value, 10);
+    renderDice(n);
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let id = '';
+    for (let i=0;i<10;i++) id += chars.charAt(Math.floor(Math.random()*chars.length));
+    document.getElementById('gameidcodetext').textContent = id;
+  });
+
+  function setScore(v){ score = v; countEl.textContent = score > 0 ? '+' + score : score; }
+  document.getElementById('minus-btn').addEventListener('click', ()=>setScore(score-1));
+  document.getElementById('minus-btn-10').addEventListener('click', ()=>setScore(score-10));
+  document.getElementById('plus-btn').addEventListener('click', ()=>setScore(score+1));
+  document.getElementById('plus-btn-10').addEventListener('click', ()=>setScore(score+10));
+
+  (function(){ let n=560; setInterval(()=>{ n += Math.floor(Math.random()*7)-3; if(n<300)n=300; if(n>999)n=999; document.querySelector('#user-count span').textContent = n; }, 2500); })();
+
+  const toggle = document.getElementById('blurToggle');
+  toggle.addEventListener('change', ()=>{
+    document.querySelectorAll('.dice-wrapper').forEach(w => { w.style.filter = toggle.checked ? 'blur(20px) opacity(0.8)' : 'none'; });
+  });
+
+  function showHistory(){ const h = document.getElementById('show-history'); h.textContent = h.textContent.indexOf('↓')>-1 ? 'Your Last 20 Rolls ↑' : 'Your Last 20 Rolls ↓'; }
+</script>
+</body>
+</html>

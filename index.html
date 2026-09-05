@@ -630,7 +630,7 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
       : '<span style="color:#eaf4ff;font-size:13px;font-family:Arial,sans-serif;">—</span>';
     // roll list: "This roll" (1.) then "Previous rolls" (2..)
     const thisColors = currentDiceColors();
-    const prev = history.slice(1);
+    const prevRolls = history.slice(1);
     let html = '';
     if (thisColors.length) {
       html += '<div style="border-bottom:1px dashed #fff;padding-bottom:5px;margin-bottom:5px;">'
@@ -639,8 +639,8 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
         + thisColors.map(function(c){ return bigDie(cssColor(c)); }).join('')
         + '</div>';
     }
-    if (prev.length > 0) {
-      prev.forEach(function(roll, i){
+    if (prevRolls.length > 0) {
+      prevRolls.forEach(function(roll, i){
         html += '<div style="border-bottom:1px dashed #fff;padding-bottom:5px;margin-bottom:5px;">'
           + (i === 0 ? '<div style="padding-left:10px;">Previous rolls:</div>' : '')
           + '<div style="margin-right:5px;text-align:right;width:25px;display:inline-block;vertical-align:middle;">'+(i+2)+'.</div>'

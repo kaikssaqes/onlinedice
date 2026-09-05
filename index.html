@@ -244,6 +244,53 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
 }
 #verify-close:hover {background:#f0f6ff;}
 
+/* ===== HISTORY MODAL ===== */
+#history-overlay {
+  position:fixed;inset:0;z-index:200001;
+  background:rgba(0,40,80,0.65);
+  display:none;align-items:center;justify-content:center;
+  padding:20px;
+}
+#history-overlay.open {display:flex;}
+#history-box {
+  background:linear-gradient(180deg,#4fa5f5 0%,#3d94e8 100%);
+  border:5px solid rgba(255,255,255,0.6);
+  border-radius:20px;
+  width:100%;max-width:480px;max-height:88vh;overflow-y:auto;
+  padding:22px 20px;
+  text-align:left;
+  color:#fff;
+  box-shadow:0 12px 40px rgba(0,0,0,.4);
+  font-family:Arial,sans-serif;
+}
+#history-box .h-head {
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:'Marvin',Arial,sans-serif;font-weight:400;
+  font-size:18px;letter-spacing:.5px;margin-bottom:12px;
+}
+#history-box .h-close {
+  background:#fff;color:#1f5eab;width:26px;height:26px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:16px;cursor:pointer;line-height:1;
+}
+#history-box .h-close:hover {background:#f0f6ff;}
+#history-box .h-label {font-size:13px;font-weight:700;letter-spacing:.5px;margin:12px 0 6px;color:#eaf4ff;}
+.hstats {display:flex;flex-wrap:wrap;gap:8px;}
+.hstat {display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,.18);border-radius:8px;padding:4px 10px;font-size:13px;font-weight:700;}
+.hstat .hdot {width:16px;height:16px;border-radius:4px;display:inline-block;border:1px solid rgba(255,255,255,.5);}
+.hstreak {display:inline-flex;align-items:center;gap:8px;background:rgba(0,0,0,.18);border-radius:8px;padding:6px 12px;font-size:14px;font-weight:700;}
+.hrow {display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px dotted rgba(255,255,255,.25);font-size:13px;}
+.hrow:last-child {border-bottom:none;}
+.hrow .hidx {min-width:24px;color:#eaf4ff;font-weight:700;}
+.hrow .hdice {display:flex;gap:4px;flex-wrap:wrap;}
+.hrow .hdie {width:26px;height:26px;border-radius:6px;display:inline-block;border:1px solid rgba(255,255,255,.5);}
+.hdie.c-red{background:linear-gradient(160deg,#f44336,#c62828)}
+.hdie.c-darkorange{background:linear-gradient(160deg,#ff9800,#e65100)}
+.hdie.c-gold{background:linear-gradient(160deg,#ffd54f,#f9a825)}
+.hdie.c-green{background:linear-gradient(160deg,#4caf50,#1b5e20)}
+.hdie.c-blue{background:linear-gradient(160deg,#2196f3,#0d47a1)}
+.hdie.c-purple{background:linear-gradient(160deg,#9c27b0,#4a148c)}
+
 .toggle-container{display:inline-flex;align-items:center;gap:10px;margin-top:15px;margin-bottom:15px;font-family:Arial,sans-serif;font-size:14px;color:#fff}
 .switch{position:relative;display:inline-block;width:44px;height:24px}
 .switch input{opacity:0;width:0;height:0}
@@ -336,6 +383,24 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
             <div class="vhash" id="verify-hash">—</div>
             <div class="vnote">This roll was generated with a cryptographically fair random source. The hash above uniquely identifies this exact result — anyone can reproduce it from the dice values shown.</div>
             <div id="verify-close" onclick="closeVerify();">Close</div>
+          </div>
+        </div>
+
+        <!-- HISTORY MODAL -->
+        <div id="history-overlay">
+          <div id="history-box">
+            <div class="h-head">
+              <span>Your Last 20 Rolls</span>
+              <span class="h-close" onclick="closeHistory();">✕</span>
+            </div>
+            <div class="h-label">STATS:</div>
+            <div class="hstats" id="hstats"></div>
+            <div class="h-label">LONGEST STREAK:</div>
+            <div class="hstreak" id="hstreak">—</div>
+            <div class="h-label">THIS ROLL:</div>
+            <div id="this-roll"></div>
+            <div class="h-label">PREVIOUS ROLLS:</div>
+            <div id="prev-rolls"></div>
           </div>
         </div>
 
@@ -521,7 +586,103 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
   // The button is a plain <a href="online-dice.zip" download>, so no JS is
   // needed. Keep it always visible (don't hide it).
 
-  function showHistory(){ const h = document.getElementById('show-history'); h.textContent = h.textContent.indexOf('↓')>-1 ? 'Your Last 20 Rolls ↑' : 'Your Last 20 Rolls ↓'; }
+  function showHistory(){
+    document.getElementById('history-overlay').classList.add('open');
+    renderHistory();
+  }
+  function closeHistory(){
+    document.getElementById('history-overlay').classList.remove('open');
+  }
+  document.getElementById('history-overlay').addEventListener('click', function(e){
+    if (e.target === this) closeHistory();
+  });
+
+  // ---- history storage (persists across the page reload on "Go Again") ----
+  const HKEY = 'od_roll_history';
+  function readHistory(){
+    try { return JSON.parse(localStorage.getItem(HKEY)) || []; }
+    catch(e){ return []; }
+  }
+  function saveHistory(arr){
+    try { localStorage.setItem(HKEY, JSON.stringify(arr)); } catch(e){}
+  }
+  function currentDiceColors(){
+    const out = [];
+    document.querySelectorAll('#Tpi0l65aKvD4efJtrZKFbMBV4l9TbypPm .dice-wrapper i').forEach(function(i){
+      let c = (i.style.color||'').replace(/!important/,'').trim();
+      if(!c) c = 'blue';
+      out.push(c);
+    });
+    return out;
+  }
+  function recordCurrentRoll(){
+    const colors = currentDiceColors();
+    if (!colors.length) return;
+    const h = readHistory();
+    h.unshift(colors);
+    if (h.length > 20) h.length = 20;
+    saveHistory(h);
+  }
+  function colorClass(c){
+    if (/red/i.test(c)) return 'c-red';
+    if (/orange/i.test(c)) return 'c-darkorange';
+    if (/gold|yellow/i.test(c)) return 'c-gold';
+    if (/green/i.test(c)) return 'c-green';
+    if (/blue/i.test(c)) return 'c-blue';
+    if (/purple/i.test(c)) return 'c-purple';
+    return 'c-blue';
+  }
+  function colorLabel(c){
+    if (/red/i.test(c)) return 'Red';
+    if (/orange/i.test(c)) return 'Orange';
+    if (/gold|yellow/i.test(c)) return 'Yellow';
+    if (/green/i.test(c)) return 'Green';
+    if (/blue/i.test(c)) return 'Blue';
+    if (/purple/i.test(c)) return 'Purple';
+    return 'Blue';
+  }
+  function renderHistory(){
+    const history = readHistory();
+    const order = ['red','darkorange','gold','green','blue','purple'];
+    const clsMap = {red:'c-red',darkorange:'c-darkorange',gold:'c-gold',green:'c-green',blue:'c-blue',purple:'c-purple'};
+    const counts = {};
+    history.forEach(function(roll){
+      roll.forEach(function(c){ const key = colorLabel(c).toLowerCase(); counts[key] = (counts[key]||0)+1; });
+    });
+    const statsEl = document.getElementById('hstats');
+    if (history.length === 0) {
+      statsEl.innerHTML = '<span style="color:#eaf4ff;font-size:13px;">No rolls yet — hit Go Again!</span>';
+    } else {
+      statsEl.innerHTML = order.map(function(k){
+        return '<span class="hstat"><span class="hdot '+clsMap[k]+'"></span>x'+(counts[k]||0)+'</span>';
+      }).join('');
+    }
+    // longest streak of same color
+    const flat = [];
+    history.forEach(function(roll){ roll.forEach(function(c){ flat.push(colorLabel(c)); }); });
+    let best = 0, bestColor = '', run = 0, prev = '';
+    flat.forEach(function(c){
+      if (c === prev) { run++; } else { run = 1; prev = c; }
+      if (run > best) { best = run; bestColor = c; }
+    });
+    document.getElementById('hstreak').innerHTML = best > 0
+      ? '<span class="hdot '+colorClass(bestColor)+'"></span> ' + bestColor + ' x' + best + ' 🔥'
+      : '—';
+    // this roll
+    const thisColors = currentDiceColors();
+    document.getElementById('this-roll').innerHTML = thisColors.length
+      ? '<div class="hrow"><span class="hidx">1.</span><span class="hdice">' +
+        thisColors.map(function(c){ return '<span class="hdie '+colorClass(c)+'"></span>'; }).join('') + '</span></div>'
+      : '<div class="hrow"><span class="hidx">—</span></div>';
+    // previous rolls
+    document.getElementById('prev-rolls').innerHTML = history.length === 0
+      ? '<div style="color:#eaf4ff;font-size:13px;padding:4px 0;">No previous rolls.</div>'
+      : history.map(function(roll, i){
+          const dice = roll.map(function(c){ return '<span class="hdie '+colorClass(c)+'"></span>'; }).join('');
+          return '<div class="hrow"><span class="hidx">'+(i+1)+'.</span><span class="hdice">'+dice+'</span></div>';
+        }).join('');
+  }
+  recordCurrentRoll();
 
   // ===== VERIFY GAME ID =====
   function fnv1a(str){

@@ -206,19 +206,21 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
 
       <div id="dice-roll-box" class="card two-thirds inline-block padded more-rounded filled">
         <h3 id="sub-title2">Roll Color Dice</h3>
-        <select id="num-select" name="num-select" class="rounded" autocomplete="off" style="width:calc(33.3% - 10px);">
+        <div style="display:flex;gap:6px;justify-content:center;align-items:center;width:100%;max-width:100%;margin:0 auto;">
+        <select id="num-select" name="num-select" class="rounded" autocomplete="off" style="flex:1 1 0;min-width:0;width:auto;"> 
           <option value="1">1 die</option><option value="2">2 dice</option><option value="3">3 dice</option><option value="4" selected>4 dice</option><option value="5">5 dice</option><option value="6">6 dice</option><option value="7">7 dice</option><option value="8">8 dice</option><option value="9">9 dice</option><option value="10">10 dice</option><option value="11">11 dice</option><option value="12">12 dice</option><option value="13">13 dice</option><option value="14">14 dice</option><option value="15">15 dice</option><option value="16">16 dice</option><option value="17">17 dice</option><option value="18">18 dice</option><option value="19">19 dice</option><option value="20">20 dice</option>
         </select>
-        <select id="type-select" class="rounded" name="type-select" autocomplete="off" style="width:calc(33.3% - 10px);">
+        <select id="type-select" class="rounded" name="type-select" autocomplete="off" style="flex:1 1 0;min-width:0;width:auto;"> 
           <option value="d4">4-sided</option><option value="d6">6-sided</option><option value="d8">8-sided</option><option value="d10">10-sided</option><option value="d12">12-sided</option><option value="d20">20-sided</option><option value="color-dice" selected>Color Dice</option><option value="perya-color-game">Perya Dice</option>
         </select>
-        <select id="theme-select" class="rounded" name="theme-select" autocomplete="off" style="width:calc(33.3% - 10px);">
+        <select id="theme-select" class="rounded" name="theme-select" autocomplete="off" style="flex:1 1 0;min-width:0;width:auto;"> 
           <option style="color:#aaa" value="blue" selected>Select Theme</option>
           <option style="color:#08f" value="blue">Blue</option><option style="color:#08f" value="sab-blue">Sab-Blue</option>
           <option style="color:#008000" value="green">Green</option><option style="color:#008000" value="sab-green">Sab-Green</option>
           <option style="color:#B22222" value="red">Red</option><option style="color:#B22222" value="sab-red">Sab-Red</option>
           <option style="color:#EE82EE" value="pink">Pink</option><option style="color:#222" value="bw">B&amp;W</option>
         </select>
+        </div>
 
         <div id="Tpi0l65aKvD4efJtrZKFbMBV4l9TbypPm" style="padding:10px 0;">
           <span id="info" style="width:0;height:0;visibility:hidden;"></span>

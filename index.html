@@ -177,9 +177,24 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
 .switch-name {font-weight:700;font-size:18px;}
 .switch input:checked+.slider{background:#fe2c55}
 .switch input:checked+.slider::before{transform:translateX(20px)}
+
+/* ===== LOADER (from source) ===== */
+.loader {position:fixed;top:0;left:0;z-index:100000;width:100%;height:100%;background:#08f radial-gradient(#d2ebfe, #08f);display:block;opacity:1;}
+.loader-wrapper {display:block;width:100%;height:100%;background-repeat:repeat;background-image:url("img/bg-lg.png");background-size:500px;}
+.loader-title {text-shadow:-1px -1px 0 #08f,1px -1px 0 #08f,-1px 1px 0 #08f,3px 3px 0 #08f;letter-spacing:0.02em;margin-bottom:20px;visibility:hidden;color:#fff;}
+.loader.hide {visibility:hidden;opacity:0;transition:visibility 0s 0.2s, opacity 0.2s linear;}
+.loader-loader {position:absolute;top:40%;left:50%;transform:translate(-50%,-40%);text-align:center;cursor:default;pointer-events:none;width:calc(100% - 20px);max-width:650px;}
 </style>
 </head>
 <body>
+<div class="loader">
+  <div class="loader-wrapper">
+    <div class="loader-loader">
+      <h1 id="lt" class="loader-title"></h1>
+      <div class="loader-dice dice-wrapper size-100 rounded-dice" style="background:#fff!important;"><i class="df-solid-small-dot-d6-1" style="color:rgba(0,0,0,0.08);"></i></div><div class="loader-dice dice-wrapper size-100 rounded-dice" style="background:#fff!important;"><i class="df-solid-small-dot-d6-1" style="color:rgba(0,0,0,0.08);"></i></div><div class="loader-dice dice-wrapper size-100 rounded-dice" style="background:#fff!important;"><i class="df-solid-small-dot-d6-1" style="color:rgba(0,0,0,0.08);"></i></div><div class="loader-dice dice-wrapper size-100 rounded-dice" style="background:#fff!important;"><i class="df-solid-small-dot-d6-1" style="color:rgba(0,0,0,0.08);"></i></div>
+    </div>
+  </div>
+</div>
 <div class="light"></div>
 <div id="content">
   <div class="inner">
@@ -206,6 +221,14 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
 
       <div id="dice-roll-box" class="card two-thirds inline-block padded more-rounded filled">
         <h3 id="sub-title2">Roll Color Dice</h3>
+        <audio autoplay="true">
+          <source src="sounds/roll.ogg" type="audio/ogg">
+          <source src="sounds/roll.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="success-sound">
+          <source src="sounds/success.ogg" type="audio/ogg">
+          <source src="sounds/success.mp3" type="audio/mpeg">
+        </audio>
         <div style="display:flex;gap:6px;justify-content:center;align-items:center;width:100%;max-width:100%;margin:0 auto;">
         <select id="num-select" name="num-select" class="rounded" autocomplete="off" style="flex:1 1 0;min-width:0;width:auto;"> 
           <option value="1">1 die</option><option value="2">2 dice</option><option value="3">3 dice</option><option value="4" selected>4 dice</option><option value="5">5 dice</option><option value="6">6 dice</option><option value="7">7 dice</option><option value="8">8 dice</option><option value="9">9 dice</option><option value="10">10 dice</option><option value="11">11 dice</option><option value="12">12 dice</option><option value="13">13 dice</option><option value="14">14 dice</option><option value="15">15 dice</option><option value="16">16 dice</option><option value="17">17 dice</option><option value="18">18 dice</option><option value="19">19 dice</option><option value="20">20 dice</option>
@@ -320,11 +343,29 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
 </footer>
 
 <script>
-  const COLORS = ['red','darkorange','gold','green','blue','purple'];
-  const diceHolder = document.getElementById('Tpi0l65aKvD4efJtrZKFbMBV4l9TbypPm');
-  const countEl = document.getElementById('count');
-  let score = 11;
+  // ===== LOADER (from source) =====
+  var funnytitles = ["What Color Will It Be?", "Rolling..", "Color Me Surprised!", "Amazing!", "Let's Roll!", "Let's Go!", "Good Luck!", "Fingers Crossed..", "Feeling Lucky?"];
+  document.getElementById('lt').textContent = funnytitles[Math.floor(Math.random()*funnytitles.length)];
+  document.getElementById('lt').style.visibility = 'visible';
 
+  function hideloader(){
+    document.getElementById('lt').style.display = 'none';
+    document.querySelectorAll('.loader-dice').forEach(function(d){ d.style.visibility = 'hidden'; });
+    document.querySelector('.loader').classList.add('hide');
+    setTimeout(function(){
+      var l = document.querySelector('.loader');
+      if(l) l.remove();
+    }, 500);
+  }
+  function playConfettiSound(){
+    var s = document.getElementById('success-sound');
+    if(s){ s.play().catch(function(){}); }
+  }
+  setTimeout(playConfettiSound, 550);
+  setTimeout(hideloader, 1250);
+
+  // ===== DICE (random on load, ID constant) =====
+  const COLORS = ['red','darkorange','gold','green','blue','purple'];
   function randomColor(){
     const max = Math.floor(0xffffffff / COLORS.length) * COLORS.length;
     const buf = new Uint32Array(1);
@@ -333,18 +374,17 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
     return COLORS[v % COLORS.length];
   }
 
-  function renderDice(n){
-    const dices = diceHolder.querySelectorAll('.dice-wrapper');
-    // rebuild dice area
+  (function randomizeDiceOnLoad(){
+    const holder = document.getElementById('Tpi0l65aKvD4efJtrZKFbMBV4l9TbypPm');
+    // restore saved dice count across reload
+    const saved = sessionStorage.getItem('diceCount');
+    const numSel = document.getElementById('num-select');
+    const n = saved ? parseInt(saved,10) : (parseInt(numSel.value,10) || 4);
+    numSel.value = n;
     const infoEl = document.getElementById('info');
-    const idP = diceHolder.querySelector('#gameidcodetext').parentNode;
-    const infomsg = document.getElementById('infomsg');
-    // clear old dice (keep info span, id p, infomsg)
-    Array.from(diceHolder.children).forEach(el => {
-      if (el.classList && el.classList.contains('dice-wrapper')) el.remove();
-    });
+    Array.from(holder.children).forEach(function(el){ if(el.classList && el.classList.contains('dice-wrapper')) el.remove(); });
     const frag = document.createDocumentFragment();
-    for (let i=0;i<n;i++){
+    for(let i=0;i<n;i++){
       const d = document.createElement('div');
       d.className = 'dice-wrapper size-100 rounded-dice';
       d.style.background = '#fff';
@@ -355,29 +395,31 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
       frag.appendChild(d);
     }
     infoEl.after(frag);
-  }
+  })();
 
-  document.getElementById('roll-button').addEventListener('click', (e)=>{
+  // "Go Again" = full page reload (matches source <a href>); ID stays constant
+  document.getElementById('roll-button').addEventListener('click', function(e){
     e.preventDefault();
-    const n = parseInt(document.getElementById('num-select').value, 10);
-    renderDice(n);
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let id = '';
-    for (let i=0;i<10;i++) id += chars.charAt(Math.floor(Math.random()*chars.length));
-    document.getElementById('gameidcodetext').textContent = id;
+    sessionStorage.setItem('diceCount', document.getElementById('num-select').value);
+    location.reload();
   });
 
+  // score counter
+  const countEl = document.getElementById('count');
+  let score = parseInt((countEl.textContent||'').replace(/[^0-9-]/g,''),10) || 11;
   function setScore(v){ score = v; countEl.textContent = score > 0 ? '+' + score : score; }
-  document.getElementById('minus-btn').addEventListener('click', ()=>setScore(score-1));
-  document.getElementById('minus-btn-10').addEventListener('click', ()=>setScore(score-10));
-  document.getElementById('plus-btn').addEventListener('click', ()=>setScore(score+1));
-  document.getElementById('plus-btn-10').addEventListener('click', ()=>setScore(score+10));
+  document.getElementById('minus-btn').addEventListener('click', function(){ setScore(score-1); });
+  document.getElementById('minus-btn-10').addEventListener('click', function(){ setScore(score-10); });
+  document.getElementById('plus-btn').addEventListener('click', function(){ setScore(score+1); });
+  document.getElementById('plus-btn-10').addEventListener('click', function(){ setScore(score+10); });
 
-  (function(){ let n=560; setInterval(()=>{ n += Math.floor(Math.random()*7)-3; if(n<300)n=300; if(n>999)n=999; document.querySelector('#user-count span').textContent = n; }, 2500); })();
+  // users online jitter
+  (function(){ let n=560; setInterval(function(){ n += Math.floor(Math.random()*7)-3; if(n<300)n=300; if(n>999)n=999; document.querySelector('#user-count span').textContent = n; }, 2500); })();
 
+  // anti-ban blur
   const toggle = document.getElementById('blurToggle');
-  toggle.addEventListener('change', ()=>{
-    document.querySelectorAll('.dice-wrapper').forEach(w => { w.style.filter = toggle.checked ? 'blur(20px) opacity(0.8)' : 'none'; });
+  toggle.addEventListener('change', function(){
+    document.querySelectorAll('.dice-wrapper').forEach(function(w){ w.style.filter = toggle.checked ? 'blur(20px) opacity(0.8)' : 'none'; });
   });
 
   function showHistory(){ const h = document.getElementById('show-history'); h.textContent = h.textContent.indexOf('↓')>-1 ? 'Your Last 20 Rolls ↑' : 'Your Last 20 Rolls ↓'; }

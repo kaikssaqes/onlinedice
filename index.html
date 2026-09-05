@@ -437,22 +437,33 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
   const isStandalone = ('standalone' in window.navigator) && window.navigator.standalone
                     || window.matchMedia('(display-mode: standalone)').matches;
 
+  // Only offer install on desktop (PC), hide on phones/tablets
+  const isMobile = /Android|iPhone|iPad|iPod|Mobile|Mobi/i.test(navigator.userAgent) || window.matchMedia('(pointer: coarse)').matches;
+  if (isMobile) {
+    const pb = document.getElementById('pwa-button');
+    const pb2 = document.getElementById('pwa-button2');
+    if (pb) pb.style.display = 'none';
+    if (pb2) pb2.style.display = 'none';
+  }
+
   window.addEventListener('beforeinstallprompt', function(e){
     e.preventDefault();
     deferredPrompt = e;
+    if (isMobile) return;
     const b = document.getElementById('pwa-button');
     if(b) b.style.display = 'inline-block';
   });
 
   function showPWA(){
+    if (isMobile) return;
     if (deferredPrompt) {
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then(function(){ deferredPrompt = null; });
       return;
     }
-    // iOS Safari / non-Chrome fallback: show instructions
+    // desktop fallback: hint to use browser menu
     if (isStandalone) { return; }
-    alert('To install: use your browser\'s menu and choose "Add to Home Screen" (iPhone) or "Install app" (Android/Chrome).');
+    alert('To install: use your browser\'s menu (⋮) and choose "Install Online Dice" — it will appear in your Start Menu.');
   }
 
   if (document.getElementById('pwa-button')) {

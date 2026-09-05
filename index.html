@@ -269,11 +269,11 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
   font-size:18px;letter-spacing:.5px;margin-bottom:12px;
 }
 #history-box .h-close {
-  background:#fff;color:#1f5eab;width:26px;height:26px;border-radius:50%;
+  background:rgba(255,255,255,0.35);color:#fff;width:26px;height:26px;border-radius:50%;
   display:inline-flex;align-items:center;justify-content:center;
   font-weight:700;font-size:16px;cursor:pointer;line-height:1;
 }
-#history-box .h-close:hover {background:#f0f6ff;}
+#history-box .h-close:hover {background:rgba(255,255,255,0.55);}
 #history-box .h-label {font-size:13px;font-weight:700;letter-spacing:.5px;margin:12px 0 6px;color:#eaf4ff;}
 .hstats {display:flex;flex-wrap:wrap;gap:8px;}
 .hstat {display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,.18);border-radius:8px;padding:4px 10px;font-size:13px;font-weight:700;}
@@ -672,9 +672,9 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
     if (history.length === 0) {
       statsEl.innerHTML = '<span style="color:#eaf4ff;font-size:13px;">No rolls yet — hit Go Again!</span>';
     } else {
-      // sort colors by count desc, top one gets trophy
-      const sorted = order.slice().sort(function(a,b){ return (counts[b]||0) - (counts[a]||0); });
-      const top = sorted[0];
+      // only show colors that actually appeared, sorted by count desc; top gets trophy
+      const appeared = order.filter(function(k){ return (counts[k]||0) > 0; });
+      const sorted = appeared.sort(function(a,b){ return (counts[b]||0) - (counts[a]||0); });
       statsEl.innerHTML = sorted.map(function(k, idx){
         const n = counts[k]||0;
         const trophy = (idx === 0 && n > 0) ? '<span class="htrophy">🏆</span>' : '';

@@ -432,56 +432,48 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
     document.querySelectorAll('.dice-wrapper').forEach(function(w){ w.style.filter = toggle.checked ? 'blur(20px) opacity(0.8)' : 'none'; });
   });
 
-  // ===== PWA INSTALL (from source: showPWA + beforeinstallprompt) =====
+  // ===== PWA INSTALL (PC-only, no alert popups) =====
   let deferredPrompt = null;
   const isStandalone = ('standalone' in window.navigator) && window.navigator.standalone
                     || window.matchMedia('(display-mode: standalone)').matches;
 
-  // Only offer install on desktop (PC), hide on phones/tablets
+  // Only offer install on desktop (PC). Hide button by default until a real
+  // install prompt is ready, so no confusing alert() ever appears.
   const isMobile = /Android|iPhone|iPad|iPod|Mobile|Mobi/i.test(navigator.userAgent) || window.matchMedia('(pointer: coarse)').matches;
-  if (isMobile) {
-    const pb = document.getElementById('pwa-button');
-    const pb2 = document.getElementById('pwa-button2');
-    if (pb) pb.style.display = 'none';
-    if (pb2) pb2.style.display = 'none';
+
+  const installBtn = document.getElementById('pwa-button');
+  const installBtn2 = document.getElementById('pwa-button2');
+  // start hidden
+  if (installBtn) installBtn.style.display = 'none';
+  if (installBtn2) installBtn2.style.display = 'none';
+
+  if (!isMobile && !isStandalone) {
+    window.addEventListener('beforeinstallprompt', function(e){
+      e.preventDefault();
+      deferredPrompt = e;
+      if (installBtn) installBtn.style.display = 'inline-block';
+    });
   }
 
-  window.addEventListener('beforeinstallprompt', function(e){
-    e.preventDefault();
-    deferredPrompt = e;
-    if (isMobile) return;
-    const b = document.getElementById('pwa-button');
-    if(b) b.style.display = 'inline-block';
-  });
-
   function showPWA(){
-    if (isMobile) return;
     if (deferredPrompt) {
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then(function(){ deferredPrompt = null; });
       return;
     }
-    // desktop fallback: hint to use browser menu
-    if (isStandalone) { return; }
-    alert('To install: use your browser\'s menu (⋮) and choose "Install Online Dice" — it will appear in your Start Menu.');
   }
 
-  if (document.getElementById('pwa-button')) {
-    document.getElementById('pwa-button').addEventListener('click', function(e){
+  if (installBtn) {
+    installBtn.addEventListener('click', function(e){
       e.preventDefault();
       showPWA();
     });
   }
-  if (document.getElementById('pwa-button2')) {
-    document.getElementById('pwa-button2').addEventListener('click', function(e){
+  if (installBtn2) {
+    installBtn2.addEventListener('click', function(e){
       e.preventDefault();
       showPWA();
     });
-  }
-
-  // Hide install button when already installed as app
-  if (isStandalone) {
-    if (document.getElementById('pwa-button')) document.getElementById('pwa-button').style.display = 'none';
   }
 
   // ===== SERVICE WORKER =====

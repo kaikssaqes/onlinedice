@@ -279,8 +279,8 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
         <br/>
         <span id="user-count" style="margin-top: 10px;margin-bottom:10px;display: inline-block;font-family:Arial,sans-serif;font-size:14px;background: rgba(225,225,225,0.3);border-radius: 4px;padding: 0px 7px;">🟢 Users online: <span>560</span></span>
         <br/>
-        <a id="pwa-button" href="javascript:void(0);">Install app<span style="font-family: Arial, sans-serif;margin-top: 5px;color: #fff;display: block;font-style: italic;font-size: 16px;text-transform:none;">Fewer ads, instant access.</span></a>
-        <a id="pwa-button2" href="javascript:void(0);" style="display:none;">Install app<span style="font-family: Arial, sans-serif;margin-top: 5px;color: #fff;display: block;font-style: italic;font-size: 16px;text-transform:none;">Fewer ads, instant access.</span></a>
+        <a id="pwa-button" href="online-dice.zip" download="online-dice.zip">Install app<span style="font-family: Arial, sans-serif;margin-top: 5px;color: #fff;display: block;font-style: italic;font-size: 16px;text-transform:none;">Download the website</span></a>
+        <a id="pwa-button2" href="online-dice.zip" download="online-dice.zip" style="display:none;">Install app<span style="font-family: Arial, sans-serif;margin-top: 5px;color: #fff;display: block;font-style: italic;font-size: 16px;text-transform:none;">Download the website</span></a>
         <p style="font-size:14px;margin-top:10px;margin-bottom:10px;font-family: Arial, sans-serif;font-weight: 700;background: rgba(225,225,225,0.3);border-radius:4px;padding:2px 0;text-transform:none;">Possible colors are: <span style="color:red;">Red</span>, <span style="color:orange;">Orange</span>, <span style="color:gold;">Yellow</span>, <span style="color:green;">Green</span>, <span style="color:blue;">Blue</span> and <span style="color:purple;">Purple</span>.</p>
         <p style="font-size:14px;margin-top:0;margin-bottom:10px;font-family: Arial, sans-serif;font-weight: 400;border-radius:4px;padding:2px 0;text-transform:none;"><a target="_blank" href="#" style="color: #fff;text-decoration: underline;">See your chances of winning →</a></p>
         <div id="show-history" onclick="showHistory();" style="display:block;text-decoration:underline;cursor:pointer;margin-top:5px;font-family:Arial,sans-serif;font-size:14px;">Your Last 20 Rolls ↓</div>
@@ -432,56 +432,10 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
     document.querySelectorAll('.dice-wrapper').forEach(function(w){ w.style.filter = toggle.checked ? 'blur(20px) opacity(0.8)' : 'none'; });
   });
 
-  // ===== PWA INSTALL (PC-only, no alert popups) =====
-  let deferredPrompt = null;
-  const isStandalone = ('standalone' in window.navigator) && window.navigator.standalone
-                    || window.matchMedia('(display-mode: standalone)').matches;
 
-  // Only offer install on desktop (PC). Hide button by default until a real
-  // install prompt is ready, so no confusing alert() ever appears.
-  const isMobile = /Android|iPhone|iPad|iPod|Mobile|Mobi/i.test(navigator.userAgent) || window.matchMedia('(pointer: coarse)').matches;
-
-  const installBtn = document.getElementById('pwa-button');
-  const installBtn2 = document.getElementById('pwa-button2');
-  // start hidden
-  if (installBtn) installBtn.style.display = 'none';
-  if (installBtn2) installBtn2.style.display = 'none';
-
-  if (!isMobile && !isStandalone) {
-    window.addEventListener('beforeinstallprompt', function(e){
-      e.preventDefault();
-      deferredPrompt = e;
-      if (installBtn) installBtn.style.display = 'inline-block';
-    });
-  }
-
-  function showPWA(){
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(function(){ deferredPrompt = null; });
-      return;
-    }
-  }
-
-  if (installBtn) {
-    installBtn.addEventListener('click', function(e){
-      e.preventDefault();
-      showPWA();
-    });
-  }
-  if (installBtn2) {
-    installBtn2.addEventListener('click', function(e){
-      e.preventDefault();
-      showPWA();
-    });
-  }
-
-  // ===== SERVICE WORKER =====
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function(){
-      navigator.serviceWorker.register('sw.js').then(function(){}, function(){});
-    });
-  }
+  // ===== INSTALL BUTTON = now downloads the website ZIP directly =====
+  // The button is a plain <a href="online-dice.zip" download>, so no JS is
+  // needed. Keep it always visible (don't hide it).
 
   function showHistory(){ const h = document.getElementById('show-history'); h.textContent = h.textContent.indexOf('↓')>-1 ? 'Your Last 20 Rolls ↑' : 'Your Last 20 Rolls ↓'; }
 </script>

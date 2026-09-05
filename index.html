@@ -291,6 +291,25 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
 .hdie.c-blue{background:linear-gradient(160deg,#2196f3,#0d47a1)}
 .hdie.c-purple{background:linear-gradient(160deg,#9c27b0,#4a148c)}
 
+/* stat squares with count INSIDE the colored square (matches screenshot) */
+.hstat {
+  display:inline-flex;align-items:center;justify-content:center;gap:0;
+  min-width:38px;height:30px;border-radius:7px;padding:0 6px;
+  font-size:13px;font-weight:900;line-height:1;
+  border:1px solid rgba(255,255,255,.55);
+  box-shadow:inset 0 -3px 0 rgba(0,0,0,.15);
+}
+.hstat .hx {font-weight:900;}
+.hstat .htrophy {font-size:11px;margin-left:3px;}
+.hstat.c-red{background:linear-gradient(160deg,#f44336,#c62828);color:#fff}
+.hstat.c-darkorange{background:linear-gradient(160deg,#ff9800,#e65100);color:#fff}
+.hstat.c-gold{background:linear-gradient(160deg,#ffd54f,#f9a825);color:#1a1a1a}
+.hstat.c-green{background:linear-gradient(160deg,#4caf50,#1b5e20);color:#fff}
+.hstat.c-blue{background:linear-gradient(160deg,#2196f3,#0d47a1);color:#fff}
+.hstat.c-purple{background:linear-gradient(160deg,#9c27b0,#4a148c);color:#fff}
+.hstreak .hdot {width:16px;height:16px;border-radius:4px;display:inline-block;border:1px solid rgba(255,255,255,.5);}
+.hstreak .hfire {font-size:14px;margin-left:4px;}
+
 .toggle-container{display:inline-flex;align-items:center;gap:10px;margin-top:15px;margin-bottom:15px;font-family:Arial,sans-serif;font-size:14px;color:#fff}
 .switch{position:relative;display:inline-block;width:44px;height:24px}
 .switch input{opacity:0;width:0;height:0}
@@ -653,8 +672,13 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
     if (history.length === 0) {
       statsEl.innerHTML = '<span style="color:#eaf4ff;font-size:13px;">No rolls yet — hit Go Again!</span>';
     } else {
-      statsEl.innerHTML = order.map(function(k){
-        return '<span class="hstat"><span class="hdot '+clsMap[k]+'"></span>x'+(counts[k]||0)+'</span>';
+      // sort colors by count desc, top one gets trophy
+      const sorted = order.slice().sort(function(a,b){ return (counts[b]||0) - (counts[a]||0); });
+      const top = sorted[0];
+      statsEl.innerHTML = sorted.map(function(k, idx){
+        const n = counts[k]||0;
+        const trophy = (idx === 0 && n > 0) ? '<span class="htrophy">🏆</span>' : '';
+        return '<span class="hstat '+clsMap[k]+'"><span class="hx">x'+n+'</span>'+trophy+'</span>';
       }).join('');
     }
     // longest streak of same color
@@ -666,7 +690,7 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
       if (run > best) { best = run; bestColor = c; }
     });
     document.getElementById('hstreak').innerHTML = best > 0
-      ? '<span class="hdot '+colorClass(bestColor)+'"></span> ' + bestColor + ' x' + best + ' 🔥'
+      ? '<span class="hstat '+colorClass(bestColor)+'"><span class="hx">x'+best+'</span></span><span class="hfire">🔥</span>'
       : '—';
     // this roll
     const thisColors = currentDiceColors();

@@ -11,6 +11,10 @@
 <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
 <meta name="msapplication-TileColor" content="#0088ff">
 <meta name="theme-color" content="#0088ff">
+<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
 /* ===== COPIED FROM style.php (verbatim, local asset paths) ===== */
 @keyframes shake {0% { transform:translate(1px, 1px) rotate(0deg); }10% { transform:translate(-1px, -2px) rotate(-1deg); }20% { transform:translate(-3px, 0px) rotate(1deg); }30% { transform:translate(3px, 2px) rotate(0deg); }40% { transform:translate(1px, -1px) rotate(1deg); }50% { transform:translate(-1px, 2px) rotate(-1deg); }60% { transform:translate(-3px, 1px) rotate(0deg); }70% { transform:translate(3px, 1px) rotate(-1deg); }80% { transform:translate(-1px, -1px) rotate(1deg); }90% { transform:translate(1px, 2px) rotate(0deg); }100% { transform:translate(1px, -2px) rotate(-1deg); }}
@@ -276,6 +280,7 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
         <span id="user-count" style="margin-top: 10px;margin-bottom:10px;display: inline-block;font-family:Arial,sans-serif;font-size:14px;background: rgba(225,225,225,0.3);border-radius: 4px;padding: 0px 7px;">🟢 Users online: <span>560</span></span>
         <br/>
         <a id="pwa-button" href="javascript:void(0);">Install app<span style="font-family: Arial, sans-serif;margin-top: 5px;color: #fff;display: block;font-style: italic;font-size: 16px;text-transform:none;">Fewer ads, instant access.</span></a>
+        <a id="pwa-button2" href="javascript:void(0);" style="display:none;">Install app<span style="font-family: Arial, sans-serif;margin-top: 5px;color: #fff;display: block;font-style: italic;font-size: 16px;text-transform:none;">Fewer ads, instant access.</span></a>
         <p style="font-size:14px;margin-top:10px;margin-bottom:10px;font-family: Arial, sans-serif;font-weight: 700;background: rgba(225,225,225,0.3);border-radius:4px;padding:2px 0;text-transform:none;">Possible colors are: <span style="color:red;">Red</span>, <span style="color:orange;">Orange</span>, <span style="color:gold;">Yellow</span>, <span style="color:green;">Green</span>, <span style="color:blue;">Blue</span> and <span style="color:purple;">Purple</span>.</p>
         <p style="font-size:14px;margin-top:0;margin-bottom:10px;font-family: Arial, sans-serif;font-weight: 400;border-radius:4px;padding:2px 0;text-transform:none;"><a target="_blank" href="#" style="color: #fff;text-decoration: underline;">See your chances of winning →</a></p>
         <div id="show-history" onclick="showHistory();" style="display:block;text-decoration:underline;cursor:pointer;margin-top:5px;font-family:Arial,sans-serif;font-size:14px;">Your Last 20 Rolls ↓</div>
@@ -426,6 +431,54 @@ a.streamer.highlight:hover {background: rgba(225,225,225,0.5);}
   toggle.addEventListener('change', function(){
     document.querySelectorAll('.dice-wrapper').forEach(function(w){ w.style.filter = toggle.checked ? 'blur(20px) opacity(0.8)' : 'none'; });
   });
+
+  // ===== PWA INSTALL (from source: showPWA + beforeinstallprompt) =====
+  let deferredPrompt = null;
+  const isStandalone = ('standalone' in window.navigator) && window.navigator.standalone
+                    || window.matchMedia('(display-mode: standalone)').matches;
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    const b = document.getElementById('pwa-button');
+    if(b) b.style.display = 'inline-block';
+  });
+
+  function showPWA(){
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(){ deferredPrompt = null; });
+      return;
+    }
+    // iOS Safari / non-Chrome fallback: show instructions
+    if (isStandalone) { return; }
+    alert('To install: use your browser\'s menu and choose "Add to Home Screen" (iPhone) or "Install app" (Android/Chrome).');
+  }
+
+  if (document.getElementById('pwa-button')) {
+    document.getElementById('pwa-button').addEventListener('click', function(e){
+      e.preventDefault();
+      showPWA();
+    });
+  }
+  if (document.getElementById('pwa-button2')) {
+    document.getElementById('pwa-button2').addEventListener('click', function(e){
+      e.preventDefault();
+      showPWA();
+    });
+  }
+
+  // Hide install button when already installed as app
+  if (isStandalone) {
+    if (document.getElementById('pwa-button')) document.getElementById('pwa-button').style.display = 'none';
+  }
+
+  // ===== SERVICE WORKER =====
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('sw.js').then(function(){}, function(){});
+    });
+  }
 
   function showHistory(){ const h = document.getElementById('show-history'); h.textContent = h.textContent.indexOf('↓')>-1 ? 'Your Last 20 Rolls ↑' : 'Your Last 20 Rolls ↓'; }
 </script>

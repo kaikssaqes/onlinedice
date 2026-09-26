@@ -716,6 +716,31 @@
 				} catch(e) {}
 			}
 
+			function renderDice(n) {
+				try {
+					var container = document.getElementById('TsL9HxOE1oNuOlxHrrCycl8pz3eczZdx6');
+					if (!container) return;
+					var children = container.children;
+					var toRemove = [];
+					for (var k = 0; k < children.length; k++) {
+						if (children[k].classList && children[k].classList.contains('dice-wrapper')) toRemove.push(children[k]);
+					}
+					for (var k = 0; k < toRemove.length; k++) { toRemove[k].remove(); }
+					var colors = ['red', 'green', 'blue', 'darkorange', 'purple', 'gold'];
+					var ref = container.querySelector('p');
+					for (var i = 0; i < n; i++) {
+						var w = document.createElement('div');
+						w.className = 'dice-wrapper size-100 rounded-dice';
+						w.style.background = '#fff';
+						var ic = document.createElement('i');
+						ic.className = 'df-solid-small-dot-d6-1';
+						ic.style.setProperty('color', colors[Math.floor(Math.random() * colors.length)], 'important');
+						w.appendChild(ic);
+						container.insertBefore(w, ref);
+					}
+				} catch(e) {}
+			}
+
 			function handleClick(e) {
 			  e.preventDefault();
 			  rollAgain();
@@ -729,16 +754,8 @@
 			}
 			
 			$("#type-select,#num-select").on("change",function() {
-				var dice_num = $("#num-select").val();
-				var dice_type = $("#type-select").val();
-				if(dice_type == "color-dice") {
-					var newlink = "https://www.online-dice.com/roll-color-dice/"+dice_num+"/";
-				} else if(dice_type == "perya-color-game") {
-					var newlink = "https://www.online-dice.com/roll-color-dice/"+dice_num+"/";
-				} else {
-					var newlink = "https://www.online-dice.com/roll-dice/"+dice_num+"/"+dice_type+"/";
-				}
-				window.location = newlink;
+				var dice_num = parseInt($("#num-select").val(), 10) || 4;
+				renderDice(dice_num);
 			});
 			
 			const a = ['t', 'a', 'b', 'l', 'e', 't', 'o', 'p'].join('');
@@ -787,10 +804,8 @@
 			}, 500);
 			
 			$("#lang-select").on("change",function() {
-				var lang = $("#lang-select").val();
-				var dice_num = $("#num-select").val();
-				var newlink = "https://www.online-dice.com/"+lang+"/roll-color-dice/"+dice_num+"/";
-				window.location = newlink;
+				var dice_num = parseInt($("#num-select").val(), 10) || 4;
+				renderDice(dice_num);
 			});
 			
 			$("#minus-btn").on("click", function() {

@@ -699,8 +699,35 @@
 				setCookie("streamers",1,365);
 			}
 			
+			function showRollLoader() {
+				try {
+					var titles = ["What Color Will It Be?", "Rolling..", "Color Me Surprised!", "Amazing!", "Let's Roll!", "Let's Go!", "Good Luck!", "Fingers Crossed..", "Feeling Lucky?"];
+					var t = titles[Math.floor(Math.random() * titles.length)];
+					var l = document.createElement('div');
+					l.className = 'loader';
+					l.id = 'roll-loader';
+					var d = '';
+					for (var k = 0; k < 4; k++) {
+						d += '<div class="loader-dice dice-wrapper size-100"><i class="df-solid-small-dot-d6-1 rounded-dice" style="background:#fff;color:rgba(0,0,0,0.08);"></i></div>';
+					}
+					l.innerHTML = '<div class="loader-wrapper"><div class="loader-loader"><h1 class="loader-title" style="visibility:visible;">' + t + '</h1>' + d + '</div></div>';
+					document.body.appendChild(l);
+				} catch(e) {}
+			}
+
+			function hideRollLoader() {
+				try {
+					var l = document.getElementById('roll-loader') || document.querySelector('.loader');
+					if (l) {
+						l.classList.add('hide');
+						setTimeout(function() { if (l.parentNode) l.parentNode.removeChild(l); }, 300);
+					}
+				} catch(e) {}
+			}
+
 			function rollAgain() {
 				try {
+					showRollLoader();
 					var colors = ['red', 'green', 'blue', 'darkorange', 'purple', 'gold'];
 					var dice = document.querySelectorAll('#TsL9HxOE1oNuOlxHrrCycl8pz3eczZdx6 > .dice-wrapper > i');
 					for (var i = 0; i < dice.length; i++) {
@@ -709,13 +736,17 @@
 						void dice[i].offsetWidth;
 						dice[i].style.animation = '';
 					}
-					var snd = document.getElementById('success-sound');
-					if (snd) { try { snd.currentTime = 0; snd.play(); } catch(e) {} }
+					setTimeout(function() {
+						var snd = document.getElementById('success-sound');
+						if (snd) { try { snd.currentTime = 0; snd.play(); } catch(e) {} }
+					}, 550);
+					setTimeout(hideRollLoader, 1250);
 				} catch(e) {}
 			}
 
 			function renderDice(n) {
 				try {
+					showRollLoader();
 					var container = document.getElementById('TsL9HxOE1oNuOlxHrrCycl8pz3eczZdx6');
 					if (!container) return;
 					var children = container.children;
@@ -736,8 +767,11 @@
 						w.appendChild(ic);
 						container.insertBefore(w, ref);
 					}
-					var snd = document.getElementById('success-sound');
-					if (snd) { try { snd.currentTime = 0; snd.play(); } catch(e) {} }
+					setTimeout(function() {
+						var snd = document.getElementById('success-sound');
+						if (snd) { try { snd.currentTime = 0; snd.play(); } catch(e) {} }
+					}, 550);
+					setTimeout(hideRollLoader, 1250);
 				} catch(e) {}
 			}
 

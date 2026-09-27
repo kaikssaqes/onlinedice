@@ -725,17 +725,82 @@
 				} catch(e) {}
 			}
 
+			var rollHistory = [];
+			try { rollHistory = JSON.parse(localStorage.getItem('od_roll_history') || '[]'); } catch(e) { rollHistory = []; }
+
+			function diceHtml(color, size) {
+				return '<div class="dice-wrapper" style="vertical-align:middle;margin:5px 2px;background:#fff!important;font-size:' + size + 'px!important;width:' + size + 'px!important;height:' + size + 'px!important;border-radius:5px!important;-webkit-border-radius:5px!important;-moz-border-radius:5px!important;"><i style="color:' + color + '!important;" class="df-solid-small-dot-d6-1" style="animation:none;"></i></div>';
+			}
+
+			function renderHistory() {
+				try {
+					var colorOrder = ['red', 'darkorange', 'gold', 'green', 'blue', 'purple'];
+					var counts = {};
+					for (var ci = 0; ci < colorOrder.length; ci++) counts[colorOrder[ci]] = 0;
+					for (var i = 0; i < rollHistory.length; i++) {
+						for (var j = 0; j < rollHistory[i].length; j++) {
+							var c = rollHistory[i][j];
+							if (counts[c] !== undefined) counts[c]++;
+						}
+					}
+					var maxCount = 0;
+					for (var ci = 0; ci < colorOrder.length; ci++) if (counts[colorOrder[ci]] > maxCount) maxCount = counts[colorOrder[ci]];
+					var badges = '';
+					for (var ci = 0; ci < colorOrder.length; ci++) {
+						var c = colorOrder[ci];
+						if (counts[c] > 0) {
+							var trophy = (maxCount > 0 && counts[c] === maxCount) ? ' 🏆' : '';
+							badges += '<span class="stats-badge noselect" style="color:' + c + '!important;"><div class="dice-wrapper" style="margin:0 1px 0 0!important;background:#fff!important;font-size:16px !important;width:16px !important;height:16px !important;border-radius:5px!important;-webkit-border-radius:5px!important;-moz-border-radius:5px!important;margin:0;padding:4px 0;"><i style="color:' + c + '!important;" class="df-solid-small-dot-d6-1"></i></div>x' + counts[c] + trophy + '</span>';
+						}
+					}
+					var stats = document.getElementById('stats');
+					if (stats) {
+						stats.innerHTML = '<div class="stats-title" style="margin-bottom:5px;font-size:16px;text-align:left;margin-left:3px;">Stats:</div><div style="text-align:left;"><style>.stats-badge {background:#fff;border-radius:4px;padding:1px 7px;margin:3px;display:inline-block;font-size:14px;font-family:Arial,sans-serif;font-weight:700;}</style>' + badges + '</div>';
+					}
+					var list = document.querySelector('#history .section-text');
+					if (list) {
+						var html = '';
+						if (rollHistory.length === 0) {
+							html = '<div style="padding-left:10px;">No rolls yet. Roll to see your history here.</div>';
+						} else {
+							for (var i = 0; i < rollHistory.length; i++) {
+								var label = (i === 0) ? 'This roll:' : 'Previous rolls:';
+								var dices = '';
+								for (var j = 0; j < rollHistory[i].length; j++) dices += diceHtml(rollHistory[i][j], 32);
+								html += '<div style="border-bottom:1px dashed #fff;padding-bottom:5px;margin-bottom:5px;"><div style="padding-left:10px;">' + label + '</div><div style="margin-right:5px;text-align:right;width:25px;display:inline-block;vertical-align:middle;">' + (i + 1) + '.</div>' + dices + '</div>';
+							}
+						}
+						list.innerHTML = html;
+					}
+				} catch(e) {}
+			}
+
+			function recordRoll(colors) {
+				try {
+					rollHistory.unshift(colors.slice());
+					if (rollHistory.length > 20) rollHistory = rollHistory.slice(0, 20);
+					try { localStorage.setItem('od_roll_history', JSON.stringify(rollHistory)); } catch(e) {}
+					renderHistory();
+				} catch(e) {}
+			}
+
+			renderHistory();
+
 			function rollAgain() {
 				try {
 					showRollLoader();
 					var colors = ['red', 'green', 'blue', 'darkorange', 'purple', 'gold'];
 					var dice = document.querySelectorAll('#TsL9HxOE1oNuOlxHrrCycl8pz3eczZdx6 > .dice-wrapper > i');
+					var rolled = [];
 					for (var i = 0; i < dice.length; i++) {
-						dice[i].style.setProperty('color', colors[Math.floor(Math.random() * colors.length)], 'important');
+						var c = colors[Math.floor(Math.random() * colors.length)];
+						rolled.push(c);
+						dice[i].style.setProperty('color', c, 'important');
 						dice[i].style.animation = 'none';
 						void dice[i].offsetWidth;
 						dice[i].style.animation = '';
 					}
+					recordRoll(rolled);
 					setTimeout(function() {
 						var snd = document.getElementById('success-sound');
 						if (snd) { try { snd.currentTime = 0; snd.play(); } catch(e) {} }
@@ -757,16 +822,20 @@
 					for (var k = 0; k < toRemove.length; k++) { toRemove[k].remove(); }
 					var colors = ['red', 'green', 'blue', 'darkorange', 'purple', 'gold'];
 					var ref = container.querySelector('p');
+					var rolled = [];
 					for (var i = 0; i < n; i++) {
 						var w = document.createElement('div');
 						w.className = 'dice-wrapper size-100 rounded-dice';
 						w.style.background = '#fff';
 						var ic = document.createElement('i');
 						ic.className = 'df-solid-small-dot-d6-1';
-						ic.style.setProperty('color', colors[Math.floor(Math.random() * colors.length)], 'important');
+						var c = colors[Math.floor(Math.random() * colors.length)];
+						rolled.push(c);
+						ic.style.setProperty('color', c, 'important');
 						w.appendChild(ic);
 						container.insertBefore(w, ref);
 					}
+					recordRoll(rolled);
 					setTimeout(function() {
 						var snd = document.getElementById('success-sound');
 						if (snd) { try { snd.currentTime = 0; snd.play(); } catch(e) {} }

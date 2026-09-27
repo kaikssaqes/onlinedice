@@ -211,7 +211,7 @@
 						<option style="color:#999" value="silver"  disabled>Silver (unlock in 18 rolls)</option>
 						<option style="color:goldenrod" value="gold"  disabled>Gold (unlock in 28 rolls)</option>
 					</select>
-					<audio autoplay="true">
+					<audio autoplay="true" id="roll-sound">
 						<source src="sounds/roll.ogg" type="audio/ogg">
 						<source src="sounds/roll.mp3" type="audio/mpeg">
 					</audio>
@@ -789,6 +789,8 @@
 			function rollAgain() {
 				try {
 					showRollLoader();
+					var rs = document.getElementById('roll-sound');
+					if (rs) { try { rs.currentTime = 0; rs.play(); } catch(e) {} }
 					var colors = ['red', 'green', 'blue', 'darkorange', 'purple', 'gold'];
 					var dice = document.querySelectorAll('#TsL9HxOE1oNuOlxHrrCycl8pz3eczZdx6 > .dice-wrapper > i');
 					var rolled = [];
@@ -812,6 +814,8 @@
 			function renderDice(n) {
 				try {
 					showRollLoader();
+					var rs = document.getElementById('roll-sound');
+					if (rs) { try { rs.currentTime = 0; rs.play(); } catch(e) {} }
 					var container = document.getElementById('TsL9HxOE1oNuOlxHrrCycl8pz3eczZdx6');
 					if (!container) return;
 					var children = container.children;

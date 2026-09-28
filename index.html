@@ -73,42 +73,7 @@
 					<h1 id="title" class="title mob-only"><a title="Online Dice" href="https://www.online-dice.com/"><img fetchpriority="high" id="logo" src="img/logo-new-mob.png" width="auto" height="40"></a></h1>
 										<h3 id="sub-title">Virtual Dice Simulator</h3>
 									</div>
-<!-- ===== VIP ROOM BANNER (edit VIP_PFP below) ===== -->
-	<style>
-	#vip-room{position:relative;width:100%;background:transparent;color:#fff;text-align:center;padding:16px 8px;font-family:'Marvin',Arial,sans-serif;box-sizing:border-box;overflow:hidden;}
-	#vip-room .vr-inner{position:relative;display:inline-flex;align-items:center;gap:14px;z-index:2;}
-	#vip-room .vr-cloud{background:#fff;padding:9px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;box-shadow:4px 4px 0 #666;flex-shrink:0;}
-	#vip-room .vr-suffix{display:inline-block;font-size:26px;color:#fff;text-shadow:-1px -1px 0 #08f,1px -1px 0 #08f,-1px 1px 0 #08f,3px 3px 0 #08f;letter-spacing:.02em;line-height:1.2;}
-	#vip-room .vr-pfp{width:64px;height:64px;border-radius:50%;border:3px solid #000;object-fit:cover;background:#222;image-rendering:pixelated;display:block;}
-	@media only screen and (max-width:480px){#vip-room .vr-name{font-size:16px;width:200px;}#vip-room .vr-suffix{font-size:16px;}#vip-room .vr-pfp{width:40px;height:40px;}#vip-room .vr-cloud{padding:6px;}}
-	#vip-room .vr-name{display:block;font-size:26px;color:#fff;text-shadow:-1px -1px 0 #08f,1px -1px 0 #08f,-1px 1px 0 #08f,3px 3px 0 #08f;letter-spacing:.02em;line-height:1.2;background:transparent;border:none;outline:none;font-family:'Marvin',Arial,sans-serif;text-transform:uppercase;width:300px;caret-color:#00aaff;padding:0;}
-	#vip-room .vr-name::placeholder{color:#666;}
-	#vip-room .vr-line{display:flex;align-items:center;flex-wrap:wrap;text-align:left;}
-	</style>
-	<div id="vip-room">
-		<div class="vr-inner">
-			<div class="vr-cloud"><img class="vr-pfp" id="vr-pfp" src="" alt="vip"></div>
-			<div class="vr-line">
-				<input class="vr-name" id="vr-name" placeholder="ENTER YOUR NAME" maxlength="18" autocomplete="off" spellcheck="false">
-				<span class="vr-suffix">'S VIP ROOM</span>
-			</div>
-		</div>
-	</div>
-	<script>
-	(function(){
-		// ===== EDIT THIS LINE =====
-		var VIP_PFP  = "";  // paste an image URL (e.g. https://cdn.discordapp.com/avatars/ID/HASH.png)
-		// ================================
-		var p = document.getElementById('vr-pfp');
-		if (VIP_PFP) { p.src = VIP_PFP; } else { p.style.display = 'none'; }
-		// the name box is editable — visitor types their name, it's saved locally
-		var inp = document.getElementById('vr-name');
-		var saved = localStorage.getItem('vip_name');
-		if (saved) { inp.value = saved; }
-		inp.addEventListener('input', function(){ localStorage.setItem('vip_name', inp.value); });
-	})();
-	</script>
-	<!-- ===== /VIP ROOM BANNER ===== -->
+
 
 				<div id="ad-box-top" class="centered" style="margin:5px auto 15px auto;min-height:250px;max-height:320px;height:auto;">
 					<ins id="top-ad" class="adsbygoogle"

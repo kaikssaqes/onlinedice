@@ -103,10 +103,6 @@
 		document.getElementById('vr-name').textContent = VIP_NAME.toUpperCase() + " VIP ROOM";
 		var p = document.getElementById('vr-pfp');
 		if (VIP_PFP) { p.src = VIP_PFP; } else { p.style.display = 'none'; }
-		// show the VIP room only when the visitor came from the extension (?vip=1)
-		if (!/[?&]vip=1/.test(location.search)) {
-			document.getElementById('vip-room').style.display = 'none';
-		}
 	})();
 	</script>
 	<!-- ===== /VIP ROOM BANNER ===== -->

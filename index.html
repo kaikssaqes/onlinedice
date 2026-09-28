@@ -48,6 +48,39 @@
 		<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
 		<link rel='mask-icon' href='img/safari-pinned-tab.svg' color='#0088ff'><meta name='msapplication-TileColor' content='#33aaff'><meta name='theme-color' content='#33aaff'>	</head>
 	<body>
+	<!-- ===== VIP ROOM BANNER (edit VIP_NAME + VIP_PFP below) ===== -->
+	<style>
+	@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+	#vip-room{position:relative;width:100%;background:#000;color:#fff;text-align:center;padding:16px 8px;font-family:'Press Start 2P',monospace;box-sizing:border-box;overflow:hidden;border-bottom:3px solid #00aaff;}
+	#vip-room .vr-inner{position:relative;display:inline-flex;align-items:center;gap:14px;z-index:2;}
+	#vip-room .vr-pfp{width:54px;height:54px;border-radius:50%;border:3px solid #fff;object-fit:cover;background:#222;image-rendering:pixelated;}
+	#vip-room .vr-name{display:block;font-size:15px;color:#fff;text-shadow:2px 2px 0 #000;line-height:1.4;text-align:left;}
+	#vip-room .vr-blocks{position:absolute;top:50%;transform:translateY(-50%);z-index:1;opacity:.85;}
+	#vip-room .vr-blocks.left{left:16px;}
+	#vip-room .vr-blocks.right{right:16px;}
+	#vip-room .b{display:inline-block;width:12px;height:12px;background:#fff;margin:1px;box-shadow:inset 0 -3px 0 #999, inset 3px 0 0 #e8e8e8;}
+	@media only screen and (max-width:480px){#vip-room .vr-blocks{display:none;}#vip-room .vr-name{font-size:11px;}}
+	</style>
+	<div id="vip-room">
+		<div class="vr-blocks left"><span class="b"></span><span class="b"></span><br><span class="b"></span><span class="b"></span><span class="b"></span></div>
+		<div class="vr-inner">
+			<img class="vr-pfp" id="vr-pfp" src="" alt="vip">
+			<div><span class="vr-name" id="vr-name">VIP ROOM</span></div>
+		</div>
+		<div class="vr-blocks right"><span class="b"></span><span class="b"></span><span class="b"></span><br><span class="b"></span><span class="b"></span></div>
+	</div>
+	<script>
+	(function(){
+		// ===== EDIT THESE TWO LINES =====
+		var VIP_NAME = "VEXY'S";
+		var VIP_PFP  = "";  // paste an image URL (e.g. https://cdn.discordapp.com/avatars/ID/HASH.png)
+		// ================================
+		document.getElementById('vr-name').textContent = VIP_NAME.toUpperCase() + " VIP ROOM";
+		var p = document.getElementById('vr-pfp');
+		if (VIP_PFP) { p.src = VIP_PFP; } else { p.style.display = 'none'; }
+	})();
+	</script>
+	<!-- ===== /VIP ROOM BANNER ===== -->
 		<div class="loader">
 			<div class="loader-wrapper">
 				<div class="loader-loader">

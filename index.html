@@ -48,7 +48,32 @@
 		<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
 		<link rel='mask-icon' href='img/safari-pinned-tab.svg' color='#0088ff'><meta name='msapplication-TileColor' content='#33aaff'><meta name='theme-color' content='#33aaff'>	</head>
 	<body>
-	<!-- ===== VIP ROOM BANNER (edit VIP_NAME + VIP_PFP below) ===== -->
+	
+		<div class="loader">
+			<div class="loader-wrapper">
+				<div class="loader-loader">
+					<h1 id="lt" class="loader-title"></h1>
+					<div class='loader-dice dice-wrapper size-100'><i class='df-solid-small-dot-d6-1 rounded-dice' style='background:#fff;color:rgba(0,0,0,0.08);'></i></div><div class='loader-dice dice-wrapper size-100'><i class='df-solid-small-dot-d6-1 rounded-dice' style='background:#fff;color:rgba(0,0,0,0.08);'></i></div><div class='loader-dice dice-wrapper size-100'><i class='df-solid-small-dot-d6-1 rounded-dice' style='background:#fff;color:rgba(0,0,0,0.08);'></i></div><div class='loader-dice dice-wrapper size-100'><i class='df-solid-small-dot-d6-1 rounded-dice' style='background:#fff;color:rgba(0,0,0,0.08);'></i></div>				</div>
+			</div>
+		</div>
+		<div class="light"></div>
+		<div id="fixed-ad-top" class="fixed-ad-top" style="overflow:hidden;">
+			<ins class="adsbygoogle"
+	             style="display:block;margin:0 auto;text-align:center;min-width:300px;max-width:728px;width:100%;"
+	             data-ad-client="ca-pub-4469574894345660"
+	             data-ad-slot="6650061531"
+	             data-full-width-responsive="false"></ins>
+	         <script>
+	             (adsbygoogle = window.adsbygoogle || []).push({});
+	        </script>
+		</div>		<div id="content">
+			<div class="inner" >
+				<div class="card full block centered">
+					<h1 id="title" class="title pc-only"><a title="Online Dice" href="https://www.online-dice.com/"><img fetchpriority="high" id="logo" src="img/logo-new.png" width="auto" height="70"></a></h1>
+					<h1 id="title" class="title mob-only"><a title="Online Dice" href="https://www.online-dice.com/"><img fetchpriority="high" id="logo" src="img/logo-new-mob.png" width="auto" height="40"></a></h1>
+										<h3 id="sub-title">Virtual Dice Simulator</h3>
+									</div>
+<!-- ===== VIP ROOM BANNER (edit VIP_NAME + VIP_PFP below) ===== -->
 	<style>
 	@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 	#vip-room{position:relative;width:100%;background:#000;color:#fff;text-align:center;padding:16px 8px;font-family:'Press Start 2P',monospace;box-sizing:border-box;overflow:hidden;border-bottom:3px solid #00aaff;}
@@ -78,33 +103,14 @@
 		document.getElementById('vr-name').textContent = VIP_NAME.toUpperCase() + " VIP ROOM";
 		var p = document.getElementById('vr-pfp');
 		if (VIP_PFP) { p.src = VIP_PFP; } else { p.style.display = 'none'; }
+		// show the VIP room only when the visitor came from the extension (?vip=1)
+		if (!/[?&]vip=1/.test(location.search)) {
+			document.getElementById('vip-room').style.display = 'none';
+		}
 	})();
 	</script>
 	<!-- ===== /VIP ROOM BANNER ===== -->
-		<div class="loader">
-			<div class="loader-wrapper">
-				<div class="loader-loader">
-					<h1 id="lt" class="loader-title"></h1>
-					<div class='loader-dice dice-wrapper size-100'><i class='df-solid-small-dot-d6-1 rounded-dice' style='background:#fff;color:rgba(0,0,0,0.08);'></i></div><div class='loader-dice dice-wrapper size-100'><i class='df-solid-small-dot-d6-1 rounded-dice' style='background:#fff;color:rgba(0,0,0,0.08);'></i></div><div class='loader-dice dice-wrapper size-100'><i class='df-solid-small-dot-d6-1 rounded-dice' style='background:#fff;color:rgba(0,0,0,0.08);'></i></div><div class='loader-dice dice-wrapper size-100'><i class='df-solid-small-dot-d6-1 rounded-dice' style='background:#fff;color:rgba(0,0,0,0.08);'></i></div>				</div>
-			</div>
-		</div>
-		<div class="light"></div>
-		<div id="fixed-ad-top" class="fixed-ad-top" style="overflow:hidden;">
-			<ins class="adsbygoogle"
-	             style="display:block;margin:0 auto;text-align:center;min-width:300px;max-width:728px;width:100%;"
-	             data-ad-client="ca-pub-4469574894345660"
-	             data-ad-slot="6650061531"
-	             data-full-width-responsive="false"></ins>
-	         <script>
-	             (adsbygoogle = window.adsbygoogle || []).push({});
-	        </script>
-		</div>		<div id="content">
-			<div class="inner" >
-				<div class="card full block centered">
-					<h1 id="title" class="title pc-only"><a title="Online Dice" href="https://www.online-dice.com/"><img fetchpriority="high" id="logo" src="img/logo-new.png" width="auto" height="70"></a></h1>
-					<h1 id="title" class="title mob-only"><a title="Online Dice" href="https://www.online-dice.com/"><img fetchpriority="high" id="logo" src="img/logo-new-mob.png" width="auto" height="40"></a></h1>
-										<h3 id="sub-title">Virtual Dice Simulator</h3>
-									</div>
+
 				<div id="ad-box-top" class="centered" style="margin:5px auto 15px auto;min-height:250px;max-height:320px;height:auto;">
 					<ins id="top-ad" class="adsbygoogle"
                          style="display:block;margin:0 auto;text-align:center;min-width:250px;max-width:100%;width:100%;max-height:280px;"

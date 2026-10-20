@@ -56,6 +56,10 @@
 					<div class='loader-dice dice-wrapper size-100'><i class='df-solid-small-dot-d6-1 rounded-dice' style='background:#fff;color:rgba(0,0,0,0.08);'></i></div><div class='loader-dice dice-wrapper size-100'><i class='df-solid-small-dot-d6-1 rounded-dice' style='background:#fff;color:rgba(0,0,0,0.08);'></i></div><div class='loader-dice dice-wrapper size-100'><i class='df-solid-small-dot-d6-1 rounded-dice' style='background:#fff;color:rgba(0,0,0,0.08);'></i></div><div class='loader-dice dice-wrapper size-100'><i class='df-solid-small-dot-d6-1 rounded-dice' style='background:#fff;color:rgba(0,0,0,0.08);'></i></div>				</div>
 			</div>
 		</div>
+		<script>
+			// Fail-safe: always hide the loader even if jQuery/scripts fail to load
+			(function(){ var hide=function(){ var l=document.querySelector('.loader'); if(l){l.style.display='none';} }; setTimeout(hide,3000); })();
+		</script>
 		<div class="light"></div>
 		<div id="fixed-ad-top" class="fixed-ad-top" style="overflow:hidden;">
 			<ins class="adsbygoogle"
@@ -452,7 +456,7 @@
 </script>
 			</div>
 		</footer>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script src="js/jquery.min.js"></script>
 		<script>
 			function setCookie(name, value, expdays) {
 				const d = new Date();

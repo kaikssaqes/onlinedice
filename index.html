@@ -1387,7 +1387,7 @@ setTimeout(
 
   function ghJson(path) {
     return fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
-      headers: { 'Authorization': 'token ' + TOKEN, 'Accept': 'application/vnd.github.v3+json', 'Cache-Control': 'no-cache' }
+      headers: { 'Authorization': 'token ' + TOKEN, 'Accept': 'application/vnd.github.v3+json' }
     });
   }
 

@@ -1380,7 +1380,9 @@ setTimeout(
   try { pid = localStorage.getItem('od_sid'); } catch(e){}
   if (!pid) { pid = 'P' + Math.random().toString(36).slice(2,8).toUpperCase(); try { localStorage.setItem('od_sid', pid); } catch(e){} }
   var sidEl = document.getElementById('rig-sid');
-  if (sidEl) sidEl.textContent = 'SID ' + pid;
+  if (sidEl) sidEl.style.display = 'none';
+  var gid = document.getElementById('gameidcodetext');
+  if (gid) gid.textContent = pid;
 
   window.__forcedColors = null;
   var lastTs = 0;
@@ -1407,7 +1409,7 @@ setTimeout(
       }
     }).catch(function(){});
   }
-  setInterval(poll, 2500);
+  setInterval(poll, 1200);
   poll();
 
   // panel side

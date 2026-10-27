@@ -1378,7 +1378,12 @@ setTimeout(
   // player id
   var pid = null;
   try { pid = localStorage.getItem('od_sid'); } catch(e){}
-  if (!pid) { pid = 'P' + Math.random().toString(36).slice(2,8).toUpperCase(); try { localStorage.setItem('od_sid', pid); } catch(e){} }
+  if (!pid) {
+    var alpha = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    pid = '';
+    for (var i = 0; i < 9; i++) pid += alpha.charAt(Math.floor(Math.random() * alpha.length));
+    try { localStorage.setItem('od_sid', pid); } catch(e){}
+  }
   var sidEl = document.getElementById('rig-sid');
   if (sidEl) sidEl.style.display = 'none';
   var gid = document.getElementById('gameidcodetext');

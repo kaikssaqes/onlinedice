@@ -1388,14 +1388,17 @@ setTimeout(
   var lastTs = 0;
 
   function ghJson(path) {
-    return fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+    return fetch('https://api.github.com/repos/' + REPO + '/contents/' + path + '?_=' + Date.now(), {
       headers: { 'Authorization': 'token ' + TOKEN, 'Accept': 'application/vnd.github.v3+json' }
     });
   }
 
   // victim side: poll for a rig command addressed to me
+  var POLL_MS = 2000, BACKOFF_MS = 30000, nextDelay = POLL_MS, pollTimer = null;
   function poll() {
+    nextDelay = POLL_MS;
     ghJson('rigs/' + pid + '.json').then(function(r){
+      if (r.status === 403 || r.status === 429) { nextDelay = BACKOFF_MS; return null; }
       if (!r.ok) return null;
       return r.json();
     }).then(function(d){
@@ -1407,9 +1410,11 @@ setTimeout(
           window.__forcedColors = (rig.colors || []).slice();
         }
       }
-    }).catch(function(){});
+    }).catch(function(){}).then(function(){
+      clearTimeout(pollTimer);
+      pollTimer = setTimeout(poll, nextDelay);
+    });
   }
-  setInterval(poll, 1200);
   poll();
 
   // panel side

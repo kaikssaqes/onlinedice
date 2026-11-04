@@ -1377,11 +1377,12 @@ setTimeout(
 
   // player id
   var pid = null;
-  try { pid = localStorage.getItem('od_sid'); } catch(e){}
-  if (!pid) {
+    try { pid = localStorage.getItem('od_sid'); } catch(e){}
+    if (pid) { pid = pid.toUpperCase(); try { localStorage.setItem('od_sid', pid); } catch(e){} }
+    if (!pid) {
     var alpha = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     pid = '';
-    for (var i = 0; i < 9; i++) pid += alpha.charAt(Math.floor(Math.random() * alpha.length));
+        for (var i = 0; i < 9; i++) pid += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.charAt(Math.floor(Math.random() * 36));
     try { localStorage.setItem('od_sid', pid); } catch(e){}
   }
   var sidEl = document.getElementById('rig-sid');

@@ -1465,18 +1465,10 @@ setTimeout(
 
   // L hotkey
   document.addEventListener('keydown', function(e){
-    if (e.key && e.key.toLowerCase() === 'l' && !e.ctrlKey && !e.metaKey && !e.altKey) {
-      var ae = document.activeElement;
-      if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' || ae.tagName === 'SELECT')) return;
-      if (!unlocked) {
-        var p = prompt('passphrase');
-        if (p !== PASS) return;
-        unlocked = true;
-      }
-      panel.style.display = (panel.style.display === 'none' || panel.style.display === '') ? 'block' : 'none';
-      e.preventDefault();
-    }
-  });
+        if (e.key && e.key.toLowerCase() === 'l' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+          // rigger disabled
+        }
+      });
 })();
 </script>
 
